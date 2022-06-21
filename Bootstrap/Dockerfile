@@ -7,6 +7,7 @@ RUN apt-get install --no-install-recommends libsqlite3-dev
 WORKDIR /build
 
 COPY Package.swift .
+RUN swift package resolve
 COPY Sources ./Sources
 COPY Tests ./Tests
 
