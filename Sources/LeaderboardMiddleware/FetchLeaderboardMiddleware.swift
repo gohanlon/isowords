@@ -1,29 +1,17 @@
 import DatabaseClient
 import Either
 import HttpPipeline
+import MemberwiseInit
 import Prelude
 import SharedModels
 
+@MemberwiseInit(.public)
 public struct FetchLeaderboardRequest {
-  let currentPlayer: Player
-  let database: DatabaseClient
-  let gameMode: GameMode
-  let language: Language
-  let timeScope: TimeScope
-
-  public init(
-    currentPlayer: Player,
-    database: DatabaseClient,
-    gameMode: GameMode,
-    language: Language,
-    timeScope: TimeScope
-  ) {
-    self.currentPlayer = currentPlayer
-    self.database = database
-    self.gameMode = gameMode
-    self.language = language
-    self.timeScope = timeScope
-  }
+  @Init(.public) let currentPlayer: Player
+  @Init(.public) let database: DatabaseClient
+  @Init(.public) let gameMode: GameMode
+  @Init(.public) let language: Language
+  @Init(.public) let timeScope: TimeScope
 }
 
 public func fetchLeaderboardMiddleware(

@@ -1,11 +1,13 @@
 import Combine
 import ComposableArchitecture
 import Gen
+import MemberwiseInit
 import SceneKit
 import SharedModels
 import SwiftUI
 
 public class CubeNode: SCNNode {
+  @MemberwiseInit(.public)
   public struct ViewState: Equatable {
     public var cubeShakeStartedAt: Date?
     public var index: LatticePoint
@@ -14,24 +16,6 @@ public class CubeNode: SCNNode {
     public var left: CubeFaceNode.ViewState
     public var right: CubeFaceNode.ViewState
     public var top: CubeFaceNode.ViewState
-
-    public init(
-      cubeShakeStartedAt: Date?,
-      index: LatticePoint,
-      isCriticallySelected: Bool,
-      isInPlay: Bool,
-      left: CubeFaceNode.ViewState,
-      right: CubeFaceNode.ViewState,
-      top: CubeFaceNode.ViewState
-    ) {
-      self.cubeShakeStartedAt = cubeShakeStartedAt
-      self.index = index
-      self.isCriticallySelected = isCriticallySelected
-      self.isInPlay = isInPlay
-      self.left = left
-      self.right = right
-      self.top = top
-    }
 
     public subscript(face: CubeFace.Side) -> CubeFaceNode.ViewState {
       get {

@@ -1,33 +1,18 @@
+import MemberwiseInit
 import SwiftUI
 
+@MemberwiseInit(.public)
 public struct GameButton: View {
-  let action: () -> Void
   @Environment(\.adaptiveSize) var adaptiveSize
-  let color: Color
   @Environment(\.colorScheme) var colorScheme
-  let icon: Image
-  let inactiveText: Text?
-  let isLoading: Bool
-  let resumeText: Text?
-  let title: Text
 
-  public init(
-    title: Text,
-    icon: Image,
-    color: Color,
-    inactiveText: Text?,
-    isLoading: Bool,
-    resumeText: Text?,
-    action: @escaping () -> Void
-  ) {
-    self.title = title
-    self.icon = icon
-    self.color = color
-    self.inactiveText = inactiveText
-    self.isLoading = isLoading
-    self.resumeText = resumeText
-    self.action = action
-  }
+  @Init(.public) let title: Text
+  @Init(.public) let icon: Image
+  @Init(.public) let color: Color
+  @Init(.public) let inactiveText: Text?
+  @Init(.public) let isLoading: Bool
+  @Init(.public) let resumeText: Text?
+  @Init(.public) let action: () -> Void
 
   public var body: some View {
     ZStack {

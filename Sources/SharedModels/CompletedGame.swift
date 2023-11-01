@@ -1,13 +1,15 @@
 import Foundation
+import MemberwiseInit
 import Tagged
 
+@MemberwiseInit(.public)
 public struct CompletedGame: Codable, Equatable, Sendable {
   public var cubes: ArchivablePuzzle
   public var gameContext: GameContext
   public var gameMode: GameMode
   public var gameStartTime: Date
-  var _language: Language?
-  public var localPlayerIndex: Move.PlayerIndex?
+  @Init(.public, label: "language") var _language: Language?
+  public var localPlayerIndex: Move.PlayerIndex? = nil
   public var moves: Moves
   public var secondsPlayed: Int
 
@@ -82,26 +84,6 @@ public struct CompletedGame: Codable, Equatable, Sendable {
         )
       }
     }
-  }
-
-  public init(
-    cubes: ArchivablePuzzle,
-    gameContext: GameContext,
-    gameMode: GameMode,
-    gameStartTime: Date,
-    language: Language,
-    localPlayerIndex: Move.PlayerIndex? = nil,
-    moves: Moves,
-    secondsPlayed: Int
-  ) {
-    self.cubes = cubes
-    self.gameContext = gameContext
-    self.gameMode = gameMode
-    self.gameStartTime = gameStartTime
-    self._language = language
-    self.localPlayerIndex = localPlayerIndex
-    self.moves = moves
-    self.secondsPlayed = secondsPlayed
   }
 
   public var language: Language {

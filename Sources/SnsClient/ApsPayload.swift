@@ -1,35 +1,21 @@
+import MemberwiseInit
+
 public struct NoContent: Codable, Equatable {}
 
+@MemberwiseInit(.public)
 public struct ApsPayload<Content> {
   public let aps: Aps
   public let content: Content
-
-  public init(
-    aps: Aps,
-    content: Content
-  ) {
-    self.aps = aps
-    self.content = content
-  }
 
   private enum CodingKeys: String, CodingKey {
     case aps
   }
 
+  @MemberwiseInit(.public)
   public struct Aps: Codable, Equatable {
     public let alert: Alert
-    public let badge: Int?
-    public let contentAvailable: Bool?
-
-    public init(
-      alert: Alert,
-      badge: Int? = nil,
-      contentAvailable: Bool? = nil
-    ) {
-      self.alert = alert
-      self.badge = badge
-      self.contentAvailable = contentAvailable
-    }
+    public let badge: Int? = nil
+    public let contentAvailable: Bool? = nil
 
     private enum CodingKeys: String, CodingKey {
       case alert
@@ -37,29 +23,14 @@ public struct ApsPayload<Content> {
       case contentAvailable = "content-available"
     }
 
+    @MemberwiseInit(.public)
     public struct Alert: Codable, Equatable {
-      public let actionLocalizedKey: String?
-      public let body: String?
-      public let localizedArguments: [String]?
-      public let localizedKey: String?
-      public let sound: String?
-      public let title: String?
-
-      public init(
-        actionLocalizedKey: String? = nil,
-        body: String? = nil,
-        localizedArguments: [String]? = nil,
-        localizedKey: String? = nil,
-        sound: String? = nil,
-        title: String? = nil
-      ) {
-        self.actionLocalizedKey = actionLocalizedKey
-        self.body = body
-        self.localizedArguments = localizedArguments
-        self.localizedKey = localizedKey
-        self.sound = sound
-        self.title = title
-      }
+      @Init(default: nil) public let actionLocalizedKey: String?
+      @Init(default: nil) public let body: String?
+      @Init(default: nil) public let localizedArguments: [String]?
+      @Init(default: nil) public let localizedKey: String?
+      @Init(default: nil) public let sound: String?
+      @Init(default: nil) public let title: String?
 
       private enum CodingKeys: String, CodingKey {
         case actionLocalizedKey = "action-loc-key"

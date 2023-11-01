@@ -2,6 +2,7 @@ import Build
 import Foundation
 import Tagged
 
+//@MemberwiseInit(.public)  // 🛑 Circular reference resolving attached macro 'MemberwiseInit'
 public struct ServerConfig: Codable, Equatable, Hashable {
   public var appId: String
   public var newestBuild: Build.Number

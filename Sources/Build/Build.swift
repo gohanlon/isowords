@@ -1,21 +1,15 @@
 import Dependencies
 import Foundation
+import MemberwiseInit
 import Tagged
 import XCTestDynamicOverlay
 
+@MemberwiseInit(.public)
 public struct Build {
   public var gitSha: () -> String
   public var number: () -> Number
 
   public typealias Number = Tagged<((), number: ()), Int>
-
-  public init(
-    gitSha: @escaping () -> String,
-    number: @escaping () -> Number
-  ) {
-    self.gitSha = gitSha
-    self.number = number
-  }
 }
 
 extension DependencyValues {

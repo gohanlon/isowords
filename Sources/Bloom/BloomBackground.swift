@@ -1,36 +1,21 @@
 import ComposableArchitecture
 import Gen
+import MemberwiseInit
 import Styleguide
 import SwiftUI
 
+@MemberwiseInit(.public)
 public struct Bloom: Identifiable {
   public let color: UIColor
-  public let id: UUID
+  @Init(default: UUID()) public let id: UUID
   public let index: Int
   public let size: CGFloat
   public let offset: CGPoint
-
-  public init(
-    color: UIColor,
-    id: UUID = .init(),
-    index: Int,
-    size: CGFloat,
-    offset: CGPoint
-  ) {
-    self.color = color
-    self.id = id
-    self.index = index
-    self.size = size
-    self.offset = offset
-  }
 }
 
+@MemberwiseInit(.public)
 public struct Blooms: View {
   public let blooms: [Bloom]
-
-  public init(blooms: [Bloom]) {
-    self.blooms = blooms
-  }
 
   public var body: some View {
     ZStack {
@@ -66,17 +51,10 @@ public struct Blooms: View {
 }
 
 public struct BloomBackground: View {
+  @MemberwiseInit(.public)
   public struct ViewState: Equatable {
-    let bloomCount: Int
-    let word: String
-
-    public init(
-      bloomCount: Int,
-      word: String
-    ) {
-      self.bloomCount = bloomCount
-      self.word = word
-    }
+    @Init(.public) let bloomCount: Int
+    @Init(.public) let word: String
   }
 
   @State var blooms: [Bloom] = []

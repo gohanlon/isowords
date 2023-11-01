@@ -1,6 +1,8 @@
 import Foundation
+import MemberwiseInit
 import Tagged
 
+@MemberwiseInit(.public)
 public struct LeaderboardScore: Decodable, Equatable {
   public typealias Id = Tagged<Self, UUID>
 
@@ -14,30 +16,6 @@ public struct LeaderboardScore: Decodable, Equatable {
   public let playerId: Player.Id
   public let puzzle: ArchivablePuzzle
   public let score: Int
-
-  public init(
-    createdAt: Date,
-    dailyChallengeId: DailyChallenge.Id?,
-    gameContext: GameContext,
-    gameMode: GameMode,
-    id: Id,
-    language: Language,
-    moves: Moves,
-    playerId: Player.Id,
-    puzzle: ArchivablePuzzle,
-    score: Int
-  ) {
-    self.createdAt = createdAt
-    self.dailyChallengeId = dailyChallengeId
-    self.gameContext = gameContext
-    self.gameMode = gameMode
-    self.id = id
-    self.language = language
-    self.moves = moves
-    self.playerId = playerId
-    self.puzzle = puzzle
-    self.score = score
-  }
 
   public enum GameContext: String, Codable {
     case dailyChallenge

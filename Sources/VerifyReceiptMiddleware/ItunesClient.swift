@@ -1,5 +1,6 @@
 import Either
 import Foundation
+import MemberwiseInit
 import ServerTestHelpers
 import SharedModels
 import XCTestDynamicOverlay
@@ -8,19 +9,12 @@ import XCTestDynamicOverlay
   import FoundationNetworking
 #endif
 
+@MemberwiseInit(.public)
 public struct ItunesClient {
   public var verify:
     (Data, AppleVerifyReceiptResponse.Environment) -> EitherIO<
       Error, (AppleVerifyReceiptResponse, Data)
     >
-
-  public init(
-    verify: @escaping (Data, AppleVerifyReceiptResponse.Environment) -> EitherIO<
-      Error, (AppleVerifyReceiptResponse, Data)
-    >
-  ) {
-    self.verify = verify
-  }
 }
 
 extension ItunesClient {

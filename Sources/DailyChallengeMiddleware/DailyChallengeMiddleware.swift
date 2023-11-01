@@ -2,26 +2,16 @@ import DatabaseClient
 import Either
 import Foundation
 import HttpPipeline
+import MemberwiseInit
 import Prelude
 import SharedModels
 
+@MemberwiseInit(.public)
 public struct FetchTodaysDailyChallengeRequest {
-  let currentPlayer: Player
-  let database: DatabaseClient
-  let language: Language
-  let randomCubes: () -> ArchivablePuzzle
-
-  public init(
-    currentPlayer: Player,
-    database: DatabaseClient,
-    language: Language,
-    randomCubes: @escaping () -> ArchivablePuzzle
-  ) {
-    self.currentPlayer = currentPlayer
-    self.database = database
-    self.language = language
-    self.randomCubes = randomCubes
-  }
+  @Init(.public) let currentPlayer: Player
+  @Init(.public) let database: DatabaseClient
+  @Init(.public) let language: Language
+  @Init(.public) let randomCubes: () -> ArchivablePuzzle
 }
 
 public func fetchTodaysDailyChallengeMiddleware(
@@ -78,23 +68,12 @@ public func fetchTodaysDailyChallengeMiddleware(
   }
 }
 
+@MemberwiseInit(.public)
 public struct StartDailyChallengeRequest {
   public let currentPlayer: Player
   public let database: DatabaseClient
   public let gameMode: GameMode
   public let language: Language
-
-  public init(
-    currentPlayer: Player,
-    database: DatabaseClient,
-    gameMode: GameMode,
-    language: Language
-  ) {
-    self.currentPlayer = currentPlayer
-    self.database = database
-    self.gameMode = gameMode
-    self.language = language
-  }
 }
 
 public func startDailyChallengeMiddleware(
@@ -132,26 +111,13 @@ public func startDailyChallengeMiddleware(
     }
 }
 
+@MemberwiseInit(.public)
 public struct FetchDailyChallengeResultsRequest {
   public let currentPlayer: Player
   public let database: DatabaseClient
   public let gameMode: GameMode
   public let gameNumber: DailyChallenge.GameNumber?
   public let language: Language
-
-  public init(
-    currentPlayer: Player,
-    database: DatabaseClient,
-    gameMode: GameMode,
-    gameNumber: DailyChallenge.GameNumber?,
-    language: Language
-  ) {
-    self.currentPlayer = currentPlayer
-    self.database = database
-    self.gameMode = gameMode
-    self.gameNumber = gameNumber
-    self.language = language
-  }
 }
 
 public func fetchDailyChallengeResults(
@@ -190,23 +156,12 @@ public func fetchDailyChallengeResults(
     }
 }
 
+@MemberwiseInit(.public)
 public struct DailyChallengeHistoryRequest {
   public let currentPlayer: Player
   public let database: DatabaseClient
   public let gameMode: GameMode
   public let language: Language
-
-  public init(
-    currentPlayer: Player,
-    database: DatabaseClient,
-    gameMode: GameMode,
-    language: Language
-  ) {
-    self.database = database
-    self.currentPlayer = currentPlayer
-    self.gameMode = gameMode
-    self.language = language
-  }
 }
 
 public func fetchRecentDailyChallenges(

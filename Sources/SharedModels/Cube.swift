@@ -1,22 +1,12 @@
 import CustomDump
+import MemberwiseInit
 
+@MemberwiseInit(.public)
 public struct Cube: Codable, Equatable {
   public var left: CubeFace
   public var right: CubeFace
   public var top: CubeFace
-  public var wasRemoved: Bool
-
-  public init(
-    left: CubeFace,
-    right: CubeFace,
-    top: CubeFace,
-    wasRemoved: Bool = false
-  ) {
-    self.left = left
-    self.right = right
-    self.top = top
-    self.wasRemoved = wasRemoved
-  }
+  public var wasRemoved: Bool = false
 
   public init(archivableCubeState state: ArchivableCube) {
     self.init(

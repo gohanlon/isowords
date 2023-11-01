@@ -3,30 +3,18 @@ import Either
 import EnvVars
 import Foundation
 import HttpPipeline
+import MemberwiseInit
 import Prelude
 import ServerRouter
 import SharedModels
 
+@MemberwiseInit(.public)
 public struct ShareGameRequest {
   public let completedGame: CompletedGame
   public let currentPlayer: Player
   public let database: DatabaseClient
   public let envVars: EnvVars
   public let router: ServerRouter
-
-  public init(
-    completedGame: CompletedGame,
-    currentPlayer: Player,
-    database: DatabaseClient,
-    envVars: EnvVars,
-    router: ServerRouter
-  ) {
-    self.completedGame = completedGame
-    self.currentPlayer = currentPlayer
-    self.database = database
-    self.envVars = envVars
-    self.router = router
-  }
 }
 
 public func submitSharedGameMiddleware(
@@ -62,17 +50,10 @@ public func submitSharedGameMiddleware(
     }
 }
 
+@MemberwiseInit(.public)
 public struct FetchSharedGameRequest {
   public let code: SharedGame.Code
   public let database: DatabaseClient
-
-  public init(
-    code: SharedGame.Code,
-    database: DatabaseClient
-  ) {
-    self.code = code
-    self.database = database
-  }
 }
 
 public func fetchSharedGameMiddleware(
@@ -107,17 +88,10 @@ public func fetchSharedGameMiddleware(
     }
 }
 
+@MemberwiseInit(.public)
 public struct ShowSharedGameRequest {
-  let code: SharedGame.Code
-  let router: ServerRouter
-
-  public init(
-    code: SharedGame.Code,
-    router: ServerRouter
-  ) {
-    self.code = code
-    self.router = router
-  }
+  @Init(.public) let code: SharedGame.Code
+  @Init(.public) let router: ServerRouter
 }
 
 public func showSharedGameMiddleware(

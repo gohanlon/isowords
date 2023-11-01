@@ -1,13 +1,12 @@
+import MemberwiseInit
 import SwiftUI
 
+@MemberwiseInit(.public)
 public struct Hosting<Content>: UIViewControllerRepresentable where Content: View {
-  private let configure: (UIViewController) -> Void
-  private let content: Content
+  @Init(.public, label: "_") private let content: Content
 
-  public init(_ content: Content, _ configure: @escaping (UIViewController) -> Void = { _ in }) {
-    self.content = content
-    self.configure = configure
-  }
+  @Init(.public, default: { (_: UIViewController) in }, label: "_")
+  private let configure: (UIViewController) -> Void
 
   public func makeUIViewController(context: Context) -> UIViewController {
     let vc = UIHostingController(rootView: self.content)

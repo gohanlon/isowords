@@ -1,29 +1,19 @@
+import MemberwiseInit
 import Styleguide
 import SwiftUI
 
 public struct BottomMenu {
-  public var buttons: [Button]
-  public var footerButton: Button?
-  public var message: Text?
   public var title: Text
+  public var message: Text? = nil
+  public var buttons: [Button]
+  public var footerButton: Button? = nil
 
-  public init(
-    title: Text,
-    message: Text? = nil,
-    buttons: [Button],
-    footerButton: Button? = nil
-  ) {
-    self.buttons = buttons
-    self.footerButton = footerButton
-    self.message = message
-    self.title = title
-  }
-
+  @MemberwiseInit(.fileprivate)
   public struct Button: Identifiable {
-    public let action: () -> Void
+    public let title: Text
     public let icon: Image
     public let id: UUID
-    public let title: Text
+    @Init(default: {}) public let action: () -> Void
 
     public init(
       title: Text,
@@ -33,18 +23,6 @@ public struct BottomMenu {
       self.action = action
       self.icon = icon
       self.id = UUID()
-      self.title = title
-    }
-
-    fileprivate init(
-      title: Text,
-      icon: Image,
-      id: UUID,
-      action: @escaping () -> Void = {}
-    ) {
-      self.action = action
-      self.icon = icon
-      self.id = id
       self.title = title
     }
 

@@ -1,46 +1,23 @@
 import Foundation
+import MemberwiseInit
 import SnsClient
 import Tagged
 
+@MemberwiseInit(.public)
 public struct EnvVars: Codable {
-  public var appEnv: AppEnv
-  public var awsAccessKeyId: String
-  public var awsPlatformApplicationArn: PlatformArn
-  public var awsPlatformApplicationSandboxArn: PlatformArn
-  public var awsSecretKey: String
-  public var baseUrl: URL
-  public var databaseUrl: String
-  public var mailgunApiKey: String
-  public var mailgunDomain: String
-  public var port: String
-  var _secrets: String
-
-  public init(
-    appEnv: AppEnv = .development,
-    awsAccessKeyId: String = "blank-aws-access-key-id",
-    awsPlatformApplicationArn: PlatformArn = "arn:aws:sns:us-east-1:1234567890:app/APNS/deadbeef",
-    awsPlatformApplicationSandboxArn: PlatformArn =
-      "arn:aws:sns:us-east-1:1234567890:app/APNS_SANDBOX/deadbeef",
-    awsSecretKey: String = "blank-aws-secret-key",
-    baseUrl: URL = URL(string: "http://localhost:9876")!,
-    databaseUrl: String = "postgres://isowords:@localhost:5432/isowords_development",
-    mailgunApiKey: String = "blank-mailgun-api-key",
-    mailgunDomain: String = "blank-mailgun-domain",
-    port: String = "9876",
-    secrets: String = "deadbeef"
-  ) {
-    self.appEnv = appEnv
-    self.awsAccessKeyId = awsAccessKeyId
-    self.awsPlatformApplicationArn = awsPlatformApplicationArn
-    self.awsPlatformApplicationSandboxArn = awsPlatformApplicationSandboxArn
-    self.awsSecretKey = awsSecretKey
-    self.baseUrl = baseUrl
-    self.databaseUrl = databaseUrl
-    self.mailgunApiKey = mailgunApiKey
-    self.mailgunDomain = mailgunDomain
-    self.port = port
-    self._secrets = secrets
-  }
+  public var appEnv: AppEnv = .development
+  public var awsAccessKeyId: String = "blank-aws-access-key-id"
+  public var awsPlatformApplicationArn: PlatformArn =
+    "arn:aws:sns:us-east-1:1234567890:app/APNS/deadbeef"
+  public var awsPlatformApplicationSandboxArn: PlatformArn =
+    "arn:aws:sns:us-east-1:1234567890:app/APNS_SANDBOX/deadbeef"
+  public var awsSecretKey: String = "blank-aws-secret-key"
+  public var baseUrl: URL = URL(string: "http://localhost:9876")!
+  public var databaseUrl: String = "postgres://isowords:@localhost:5432/isowords_development"
+  public var mailgunApiKey: String = "blank-mailgun-api-key"
+  public var mailgunDomain: String = "blank-mailgun-domain"
+  public var port: String = "9876"
+  @Init(.public, label: "secrets") var _secrets: String = "deadbeef"
 
   private enum CodingKeys: String, CodingKey {
     case appEnv = "APP_ENV"

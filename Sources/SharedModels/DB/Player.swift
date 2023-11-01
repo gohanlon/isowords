@@ -1,6 +1,8 @@
 import Foundation
+import MemberwiseInit
 import Tagged
 
+@MemberwiseInit(.public)
 public struct Player: Codable, Equatable, Sendable {
   public typealias Id = Tagged<Self, UUID>
 
@@ -13,28 +15,6 @@ public struct Player: Codable, Equatable, Sendable {
   public var sendDailyChallengeReminder: Bool
   public let sendDailyChallengeSummary: Bool
   public let timeZone: String
-
-  public init(
-    accessToken: AccessToken,
-    createdAt: Date,
-    deviceId: DeviceId,
-    displayName: String?,
-    gameCenterLocalPlayerId: GameCenterLocalPlayerId?,
-    id: Id,
-    sendDailyChallengeReminder: Bool,
-    sendDailyChallengeSummary: Bool,
-    timeZone: String
-  ) {
-    self.accessToken = accessToken
-    self.createdAt = createdAt
-    self.deviceId = deviceId
-    self.displayName = displayName
-    self.gameCenterLocalPlayerId = gameCenterLocalPlayerId
-    self.id = id
-    self.sendDailyChallengeReminder = sendDailyChallengeReminder
-    self.sendDailyChallengeSummary = sendDailyChallengeSummary
-    self.timeZone = timeZone
-  }
 }
 
 #if DEBUG

@@ -1,6 +1,8 @@
 import Foundation
+import MemberwiseInit
 import Tagged
 
+@MemberwiseInit(.public)
 public struct AppleReceipt: Codable, Equatable {
   public typealias Id = Tagged<Self, UUID>
 
@@ -8,18 +10,6 @@ public struct AppleReceipt: Codable, Equatable {
   public var id: Id
   public var playerId: Player.Id
   public var receipt: AppleVerifyReceiptResponse
-
-  public init(
-    createdAt: Date,
-    id: Id,
-    playerId: Player.Id,
-    receipt: AppleVerifyReceiptResponse
-  ) {
-    self.createdAt = createdAt
-    self.id = id
-    self.playerId = playerId
-    self.receipt = receipt
-  }
 }
 
 #if DEBUG

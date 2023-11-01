@@ -1,28 +1,17 @@
 import ComposableArchitecture
+import MemberwiseInit
 import SharedModels
 import SwiftUI
 
+//@MemberwiseInit(.public)  // 🛑 Circular reference resolving attached macro 'MemberwiseInit'
 public struct LeaderboardResults<TimeScope>: Reducer {
+  @MemberwiseInit(.public)
   public struct State {
-    public var gameMode: GameMode
-    public var isLoading: Bool
-    public var isTimeScopeMenuVisible: Bool
-    public var resultEnvelope: ResultEnvelope?
+    public var gameMode: GameMode = .timed
+    public var isLoading: Bool = false
+    public var isTimeScopeMenuVisible: Bool = false
+    public var resultEnvelope: ResultEnvelope? = nil
     public var timeScope: TimeScope
-
-    public init(
-      gameMode: GameMode = .timed,
-      isLoading: Bool = false,
-      isTimeScopeMenuVisible: Bool = false,
-      resultEnvelope: ResultEnvelope? = nil,
-      timeScope: TimeScope
-    ) {
-      self.gameMode = gameMode
-      self.isLoading = isLoading
-      self.isTimeScopeMenuVisible = isTimeScopeMenuVisible
-      self.resultEnvelope = resultEnvelope
-      self.timeScope = timeScope
-    }
 
     var nonDisplayedResultsCount: Int {
       (self.resultEnvelope?.outOf ?? 0)

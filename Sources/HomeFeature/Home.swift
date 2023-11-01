@@ -6,6 +6,7 @@ import ComposableGameCenter
 import DailyChallengeFeature
 import DeviceId
 import LeaderboardFeature
+import MemberwiseInit
 import MultiplayerFeature
 import Overture
 import ServerConfigClient
@@ -60,13 +61,14 @@ public struct Home: Reducer {
     }
   }
 
+  @MemberwiseInit(.public)
   public struct State: Equatable {
-    public var dailyChallenges: [FetchTodaysDailyChallengeResponse]?
-    @PresentationState public var destination: Destination.State?
-    public var hasChangelog: Bool
-    public var hasPastTurnBasedGames: Bool
-    @PresentationState public var nagBanner: NagBanner.State?
-    public var savedGames: SavedGamesState {
+    public var dailyChallenges: [FetchTodaysDailyChallengeResponse]? = nil
+    public var hasChangelog: Bool = false
+    public var hasPastTurnBasedGames: Bool = false
+    @Init @PresentationState public var nagBanner: NagBanner.State? = nil
+    @Init @PresentationState public var destination: Destination.State? = nil
+    public var savedGames: SavedGamesState = SavedGamesState() {
       didSet {
         guard case var .dailyChallenge(dailyChallengeState) = self.destination
         else { return }
@@ -75,8 +77,8 @@ public struct Home: Reducer {
         self.destination = .dailyChallenge(dailyChallengeState)
       }
     }
-    public var turnBasedMatches: [ActiveTurnBasedMatch]
-    public var weekInReview: FetchWeekInReviewResponse?
+    public var turnBasedMatches: [ActiveTurnBasedMatch] = []
+    public var weekInReview: FetchWeekInReviewResponse? = nil
 
     public var activeGames: ActiveGamesState {
       get {
@@ -89,26 +91,6 @@ public struct Home: Reducer {
         self.savedGames = newValue.savedGames
         self.turnBasedMatches = newValue.turnBasedMatches
       }
-    }
-
-    public init(
-      dailyChallenges: [FetchTodaysDailyChallengeResponse]? = nil,
-      hasChangelog: Bool = false,
-      hasPastTurnBasedGames: Bool = false,
-      nagBanner: NagBanner.State? = nil,
-      destination: Destination.State? = nil,
-      savedGames: SavedGamesState = SavedGamesState(),
-      turnBasedMatches: [ActiveTurnBasedMatch] = [],
-      weekInReview: FetchWeekInReviewResponse? = nil
-    ) {
-      self.dailyChallenges = dailyChallenges
-      self.destination = destination
-      self.hasChangelog = hasChangelog
-      self.hasPastTurnBasedGames = hasPastTurnBasedGames
-      self.nagBanner = nagBanner
-      self.savedGames = savedGames
-      self.turnBasedMatches = turnBasedMatches
-      self.weekInReview = weekInReview
     }
 
     var hasActiveGames: Bool {

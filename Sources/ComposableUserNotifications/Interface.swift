@@ -1,5 +1,6 @@
 import Combine
 import ComposableArchitecture
+import MemberwiseInit
 import UserNotifications
 
 public struct UserNotificationClient {
@@ -31,33 +32,20 @@ public struct UserNotificationClient {
     }
   }
 
+  @MemberwiseInit(.public)
   public struct Notification: Equatable {
     public var date: Date
     public var request: UNNotificationRequest
 
-    public init(
-      date: Date,
-      request: UNNotificationRequest
-    ) {
-      self.date = date
-      self.request = request
-    }
-
+    @MemberwiseInit(.public)
     public struct Response: Equatable {
       public var notification: Notification
-
-      public init(notification: Notification) {
-        self.notification = notification
-      }
     }
 
     // TODO: should this be nested in UserNotificationClient instead of Notification?
+    @MemberwiseInit(.public)
     public struct Settings: Equatable {
       public var authorizationStatus: UNAuthorizationStatus
-
-      public init(authorizationStatus: UNAuthorizationStatus) {
-        self.authorizationStatus = authorizationStatus
-      }
     }
   }
 }

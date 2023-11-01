@@ -1,24 +1,16 @@
 import Combine
 import ComposableArchitecture
+import MemberwiseInit
 import SceneKit
 import SharedModels
 import SwiftUI
 
 public class CubeFaceNode: SCNNode {
+  @MemberwiseInit(.public)
   public struct ViewState: Equatable {
     public var cubeFace: CubeFace
-    public var letterIsHidden: Bool
+    public var letterIsHidden: Bool = false
     public var status: Status
-
-    public init(
-      cubeFace: CubeFace,
-      letterIsHidden: Bool = false,
-      status: Status
-    ) {
-      self.cubeFace = cubeFace
-      self.letterIsHidden = letterIsHidden
-      self.status = status
-    }
 
     public enum Status {
       case deselected

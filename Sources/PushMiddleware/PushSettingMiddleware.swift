@@ -1,23 +1,15 @@
 import DatabaseClient
 import Either
 import HttpPipeline
+import MemberwiseInit
 import Prelude
 import SharedModels
 
+@MemberwiseInit(.public)
 public struct UpdatePushSettingRequest {
   public let currentPlayer: Player
   public let database: DatabaseClient
   public let setting: ServerRoute.Api.Route.Push.Setting
-
-  public init(
-    currentPlayer: Player,
-    database: DatabaseClient,
-    setting: ServerRoute.Api.Route.Push.Setting
-  ) {
-    self.currentPlayer = currentPlayer
-    self.database = database
-    self.setting = setting
-  }
 }
 
 public struct UpdatePushSettingResponse: Encodable {

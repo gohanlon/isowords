@@ -2,21 +2,15 @@ import ClientModels
 import ComposableArchitecture
 import ComposableGameCenter
 import DateHelpers
+import MemberwiseInit
 import SharedModels
 import Styleguide
 import SwiftUI
 
+@MemberwiseInit(.public)
 public struct ActiveGamesState: Equatable {
-  public var savedGames: SavedGamesState
-  public var turnBasedMatches: [ActiveTurnBasedMatch]
-
-  public init(
-    savedGames: SavedGamesState = .init(),
-    turnBasedMatches: [ActiveTurnBasedMatch] = []
-  ) {
-    self.savedGames = savedGames
-    self.turnBasedMatches = turnBasedMatches
-  }
+  public var savedGames: SavedGamesState = .init()
+  public var turnBasedMatches: [ActiveTurnBasedMatch] = []
 
   public var isEmpty: Bool {
     self.savedGames.dailyChallengeUnlimited == nil

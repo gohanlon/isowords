@@ -2,6 +2,7 @@ import AudioPlayerClient
 import ComposableArchitecture
 import CubeCore
 import GameCore
+import MemberwiseInit
 import OnboardingFeature
 import ServerConfig
 import StoreKit
@@ -9,17 +10,10 @@ import SwiftUI
 import TcaHelpers
 
 public struct Demo: Reducer {
+  @MemberwiseInit(.public)
   public struct State: Equatable {
-    var appStoreOverlayIsPresented: Bool
-    var step: Step
-
-    public init(
-      appStoreOverlayIsPresented: Bool = false,
-      step: Step = .onboarding(.init(presentationStyle: .demo))
-    ) {
-      self.appStoreOverlayIsPresented = appStoreOverlayIsPresented
-      self.step = step
-    }
+    @Init(.public) var appStoreOverlayIsPresented: Bool = false
+    @Init(.public) var step: Step = .onboarding(.init(presentationStyle: .demo))
 
     public enum Step: Equatable {
       case game(Game.State)

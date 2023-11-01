@@ -1,24 +1,16 @@
 import DatabaseClient
 import Either
 import HttpPipeline
+import MemberwiseInit
 import Overture
 import Prelude
 import SharedModels
 
+@MemberwiseInit(.public)
 public struct FetchWeekInReviewRequest {
-  let currentPlayer: Player
-  let database: DatabaseClient
-  let language: Language
-
-  public init(
-    currentPlayer: Player,
-    database: DatabaseClient,
-    language: Language
-  ) {
-    self.currentPlayer = currentPlayer
-    self.database = database
-    self.language = language
-  }
+  @Init(.public) let currentPlayer: Player
+  @Init(.public) let database: DatabaseClient
+  @Init(.public) let language: Language
 }
 
 public func fetchWeekInReview(

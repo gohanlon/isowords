@@ -1,4 +1,5 @@
 // NB: Vended from ComposableCoreMotion
+import MemberwiseInit
 
 #if canImport(CoreMotion)
   import CoreMotion
@@ -6,15 +7,12 @@
   /// The device's orientation relative to a known frame of reference at a point in time.
   ///
   /// See the documentation for `CMAttitude` for more info.
+  @MemberwiseInit(.public)
   public struct Attitude: Hashable {
     public var quaternion: CMQuaternion
 
     public init(_ attitude: CMAttitude) {
       self.quaternion = attitude.quaternion
-    }
-
-    public init(quaternion: CMQuaternion) {
-      self.quaternion = quaternion
     }
 
     @inlinable

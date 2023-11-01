@@ -1,3 +1,5 @@
+import MemberwiseInit
+
 public enum SubmitGameResponse: Codable, Equatable {
   case dailyChallenge(DailyChallengeResult)
   case shared(SharedGameResponse)
@@ -49,17 +51,10 @@ public enum SubmitGameResponse: Codable, Equatable {
 public struct LeaderboardScoreResult: Codable, Equatable {
   public let ranks: [String: Rank]
 
+  @MemberwiseInit(.public)
   public struct Rank: Codable, Equatable {
     public let outOf: Int
     public let rank: Int
-
-    public init(
-      outOf: Int,
-      rank: Int
-    ) {
-      self.outOf = outOf
-      self.rank = rank
-    }
   }
 
   public init(ranks: [TimeScope: Rank]) {

@@ -1,9 +1,11 @@
 import ComposableGameCenter
 import Dependencies
 import Foundation
+import MemberwiseInit
 import SharedModels
 import Tagged
 
+//@MemberwiseInit(.public)  // 🛑 Circular reference resolving attached macro 'MemberwiseInit'
 public struct TurnBasedMatchData: Codable, Equatable {
   public var cubes: ArchivablePuzzle
   public var gameMode: GameMode
@@ -25,17 +27,10 @@ public struct TurnBasedMatchData: Codable, Equatable {
     self.moves = moves
   }
 
+  @MemberwiseInit(.public)
   public struct Metadata: Codable, Equatable {
     public var lastOpenedAt: Date?
     public var playerIndexToId: [SharedModels.Move.PlayerIndex: SharedModels.Player.Id]
-
-    public init(
-      lastOpenedAt: Date?,
-      playerIndexToId: [SharedModels.Move.PlayerIndex: SharedModels.Player.Id]
-    ) {
-      self.lastOpenedAt = lastOpenedAt
-      self.playerIndexToId = playerIndexToId
-    }
   }
 
   public func score(forPlayerIndex index: Move.PlayerIndex) -> Int {

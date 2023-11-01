@@ -1,5 +1,6 @@
 import Build
 import Foundation
+import MemberwiseInit
 import Tagged
 
 public enum ServerRoute: Equatable {
@@ -17,20 +18,14 @@ public enum ServerRoute: Equatable {
   public enum Demo: Equatable {
     case submitGame(SubmitRequest)
 
+    @MemberwiseInit(.public)
     public struct SubmitRequest: Codable, Equatable {
       public let gameMode: GameMode
       public let score: Int
-
-      public init(
-        gameMode: GameMode,
-        score: Int
-      ) {
-        self.gameMode = gameMode
-        self.score = score
-      }
     }
   }
 
+  //@MemberwiseInit(.public)  // 🛑 Circular reference resolving attached macro 'MemberwiseInit'
   public struct Api: Equatable {
     public let accessToken: AccessToken
     public let isDebug: Bool
@@ -73,6 +68,7 @@ public enum ServerRoute: Equatable {
       public enum Games: Equatable, Sendable {
         case submit(SubmitRequest)
 
+        //@MemberwiseInit(.public)  // 🛑 Circular reference resolving attached macro 'MemberwiseInit'
         public struct SubmitRequest: Codable, Equatable, Sendable {
           public let gameContext: GameContext
           public let moves: Moves
@@ -91,39 +87,19 @@ public enum ServerRoute: Equatable {
             case solo(Solo)
             case turnBased(TurnBased)
 
+            @MemberwiseInit(.public)
             public struct Solo: Codable, Equatable, Sendable {
               public let gameMode: GameMode
               public let language: Language
               public let puzzle: ArchivablePuzzle
-
-              public init(
-                gameMode: GameMode,
-                language: Language,
-                puzzle: ArchivablePuzzle
-              ) {
-                self.gameMode = gameMode
-                self.language = language
-                self.puzzle = puzzle
-              }
             }
 
+            @MemberwiseInit(.public)
             public struct TurnBased: Codable, Equatable, Sendable {
               public let gameMode: GameMode
               public let language: Language
               public let playerIndexToId: [Move.PlayerIndex: Player.Id]
               public let puzzle: ArchivablePuzzle
-
-              public init(
-                gameMode: GameMode,
-                language: Language,
-                playerIndexToId: [Move.PlayerIndex: Player.Id],
-                puzzle: ArchivablePuzzle
-              ) {
-                self.gameMode = gameMode
-                self.language = language
-                self.playerIndexToId = playerIndexToId
-                self.puzzle = puzzle
-              }
 
               private enum CodingKeys: CodingKey {
                 case gameMode
@@ -158,33 +134,17 @@ public enum ServerRoute: Equatable {
         case register(Register)
         case updateSetting(Setting)
 
+        @MemberwiseInit(.public)
         public struct Register: Codable, Equatable, Sendable {
           public let authorizationStatus: PushAuthorizationStatus
           public let build: Build.Number
           public let token: String
-
-          public init(
-            authorizationStatus: PushAuthorizationStatus,
-            build: Build.Number,
-            token: String
-          ) {
-            self.authorizationStatus = authorizationStatus
-            self.build = build
-            self.token = token
-          }
         }
 
+        @MemberwiseInit(.public)
         public struct Setting: Codable, Equatable, Sendable {
           public let notificationType: PushNotificationContent.CodingKeys
           public let sendNotifications: Bool
-
-          public init(
-            notificationType: PushNotificationContent.CodingKeys,
-            sendNotifications: Bool
-          ) {
-            self.notificationType = notificationType
-            self.sendNotifications = sendNotifications
-          }
         }
       }
 
@@ -195,23 +155,12 @@ public enum ServerRoute: Equatable {
     }
   }
 
+  @MemberwiseInit(.public)
   public struct AuthenticateRequest: Codable, Equatable {
     public let deviceId: DeviceId
     public let displayName: String?
     public let gameCenterLocalPlayerId: GameCenterLocalPlayerId?
     public let timeZone: String
-
-    public init(
-      deviceId: DeviceId,
-      displayName: String?,
-      gameCenterLocalPlayerId: GameCenterLocalPlayerId?,
-      timeZone: String
-    ) {
-      self.deviceId = deviceId
-      self.displayName = displayName
-      self.gameCenterLocalPlayerId = gameCenterLocalPlayerId
-      self.timeZone = timeZone
-    }
   }
 
   public enum SharedGame: Equatable {

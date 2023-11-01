@@ -1,18 +1,16 @@
 import ClientModels
 import ComposableArchitecture
 import FileClient
+import MemberwiseInit
 import Overture
 import SharedModels
 import Styleguide
 import SwiftUI
 
 public struct Solo: Reducer {
+  @MemberwiseInit(.public)
   public struct State: Equatable {
-    var inProgressGame: InProgressGame?
-
-    public init(inProgressGame: InProgressGame? = nil) {
-      self.inProgressGame = inProgressGame
-    }
+    @Init(.public) var inProgressGame: InProgressGame? = nil
   }
 
   public enum Action: Equatable {
@@ -47,10 +45,11 @@ public struct Solo: Reducer {
   }
 }
 
+@MemberwiseInit(.public)
 public struct SoloView: View {
   @Environment(\.adaptiveSize) var adaptiveSize
   @Environment(\.colorScheme) var colorScheme
-  let store: StoreOf<Solo>
+  @Init(.public) let store: StoreOf<Solo>
 
   struct ViewState: Equatable {
     let currentScore: Int?
@@ -58,10 +57,6 @@ public struct SoloView: View {
     init(state: Solo.State) {
       self.currentScore = state.inProgressGame?.currentScore
     }
-  }
-
-  public init(store: StoreOf<Solo>) {
-    self.store = store
   }
 
   public var body: some View {

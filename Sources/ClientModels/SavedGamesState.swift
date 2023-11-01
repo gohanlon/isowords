@@ -1,12 +1,7 @@
-public struct SavedGamesState: Codable, Equatable {
-  public var dailyChallengeUnlimited: InProgressGame?
-  public var unlimited: InProgressGame?
+import MemberwiseInit
 
-  public init(
-    dailyChallengeUnlimited: InProgressGame? = nil,
-    unlimited: InProgressGame? = nil
-  ) {
-    self.dailyChallengeUnlimited = dailyChallengeUnlimited
-    self.unlimited = unlimited
-  }
+@MemberwiseInit(.public)
+public struct SavedGamesState: Codable, Equatable {
+  public var dailyChallengeUnlimited: InProgressGame? = nil
+  public var unlimited: InProgressGame? = nil
 }

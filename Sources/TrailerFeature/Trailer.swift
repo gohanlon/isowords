@@ -3,25 +3,17 @@ import Bloom
 import ComposableArchitecture
 import CubeCore
 import GameCore
+import MemberwiseInit
 import SharedModels
 import SwiftUI
 import UIApplicationClient
 
 public struct Trailer: Reducer {
+  @MemberwiseInit(.public)
   public struct State: Equatable {
-    var game: Game.State
-    @BindingState var nub: CubeSceneView.ViewState.NubState
-    @BindingState var opacity: Double
-
-    public init(
-      game: Game.State,
-      nub: CubeSceneView.ViewState.NubState = .init(),
-      opacity: Double = 0
-    ) {
-      self.game = game
-      self.nub = nub
-      self.opacity = opacity
-    }
+    @Init(.public) var game: Game.State
+    @Init(.public) @BindingState var nub: CubeSceneView.ViewState.NubState = .init()
+    @Init(.public) @BindingState var opacity: Double = 0
 
     public init() {
       self = .init(

@@ -1,5 +1,7 @@
 import CustomDump
+import MemberwiseInit
 
+@MemberwiseInit(.public)
 public struct LatticePoint: Codable, Hashable, Sendable {
   public enum Index: Int, CaseIterable, Codable, Comparable, Sendable {
     case zero = 0
@@ -14,12 +16,6 @@ public struct LatticePoint: Codable, Hashable, Sendable {
   public var x: Index
   public var y: Index
   public var z: Index
-
-  public init(x: Index, y: Index, z: Index) {
-    self.x = x
-    self.y = y
-    self.z = z
-  }
 
   public static let zero = Self(x: Index.zero, y: .zero, z: .zero)
 

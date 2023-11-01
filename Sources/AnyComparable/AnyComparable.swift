@@ -1,17 +1,10 @@
+import MemberwiseInit
+
+@MemberwiseInit(.public)
 public struct AnyComparable: Comparable {
   public let base: Any
-  let isEqual: (Any) -> Bool
-  let compare: (Any) -> Bool
-
-  public init(
-    base: Any,
-    isEqual: @escaping (Any) -> Bool,
-    compare: @escaping (Any) -> Bool
-  ) {
-    self.base = base
-    self.isEqual = isEqual
-    self.compare = compare
-  }
+  @Init(.public) let isEqual: (Any) -> Bool
+  @Init(.public) let compare: (Any) -> Bool
 
   public init<C: Equatable>(_ base: C, compare: @escaping (C, C) -> Bool) {
     self.base = base

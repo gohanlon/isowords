@@ -4,6 +4,7 @@ import ComposableStoreKit
 import CubeCore
 import GameCore
 import HomeFeature
+import MemberwiseInit
 import NotificationHelpers
 import OnboardingFeature
 import SharedModels
@@ -30,20 +31,11 @@ public struct AppReducer: Reducer {
     }
   }
 
+  @MemberwiseInit(.public)
   public struct State: Equatable {
-    public var appDelegate: AppDelegateReducer.State
-    @PresentationState public var destination: Destination.State?
-    public var home: Home.State
-
-    public init(
-      appDelegate: AppDelegateReducer.State = AppDelegateReducer.State(),
-      destination: Destination.State? = nil,
-      home: Home.State = .init()
-    ) {
-      self.appDelegate = appDelegate
-      self.destination = destination
-      self.home = home
-    }
+    public var appDelegate: AppDelegateReducer.State = AppDelegateReducer.State()
+    @Init @PresentationState public var destination: Destination.State? = nil
+    public var home: Home.State = .init()
 
     var firstLaunchOnboarding: Onboarding.State? {
       switch self.destination {

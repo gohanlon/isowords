@@ -1,11 +1,9 @@
+import MemberwiseInit
 import SwiftUI
 
+@MemberwiseInit(.public)
 public struct ActivityView: UIViewControllerRepresentable {
   public var activityItems: [Any]
-
-  public init(activityItems: [Any]) {
-    self.activityItems = activityItems
-  }
 
   public func makeUIViewController(context: Context) -> UIActivityViewController {
     let controller = UIActivityViewController(

@@ -1,3 +1,6 @@
+import MemberwiseInit
+
+@MemberwiseInit(.public)
 public struct PushAuthorizationStatus: RawRepresentable, Codable, Equatable, Sendable {
   public static let authorized = Self(rawValue: 2)
   public static let denied = Self(rawValue: 1)
@@ -6,8 +9,4 @@ public struct PushAuthorizationStatus: RawRepresentable, Codable, Equatable, Sen
   public static let provisional = Self(rawValue: 3)
 
   public let rawValue: Int
-
-  public init(rawValue: Int) {
-    self.rawValue = rawValue
-  }
 }

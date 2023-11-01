@@ -2,6 +2,7 @@ import ApiClient
 import ComposableArchitecture
 import CubeCore
 import CubePreview
+import MemberwiseInit
 import SharedModels
 import SwiftUI
 import UserSettingsClient
@@ -44,23 +45,12 @@ public struct Leaderboard: Reducer {
     }
   }
 
+  @MemberwiseInit(.public)
   public struct State: Equatable {
-    @PresentationState public var destination: Destination.State?
+    @Init @PresentationState public var destination: Destination.State? = nil
     public var scope: LeaderboardScope = .games
     public var solo: LeaderboardResults<TimeScope>.State = .init(timeScope: .lastWeek)
     public var vocab: LeaderboardResults<TimeScope>.State = .init(timeScope: .lastWeek)
-
-    public init(
-      destination: Destination.State? = nil,
-      scope: LeaderboardScope = .games,
-      solo: LeaderboardResults<TimeScope>.State = .init(timeScope: .lastWeek),
-      vocab: LeaderboardResults<TimeScope>.State = .init(timeScope: .lastWeek)
-    ) {
-      self.destination = destination
-      self.scope = scope
-      self.solo = solo
-      self.vocab = vocab
-    }
   }
 
   public enum Action: Equatable {

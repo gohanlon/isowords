@@ -1,6 +1,7 @@
 import ComposableArchitecture
 import CubePreview
 import LocalDatabaseClient
+import MemberwiseInit
 import SwiftUI
 
 public struct Vocab: Reducer {
@@ -18,20 +19,11 @@ public struct Vocab: Reducer {
     }
   }
 
+  @MemberwiseInit(.public)
   public struct State: Equatable {
-    @PresentationState var destination: Destination.State?
-    var isAnimationReduced: Bool
-    var vocab: LocalDatabaseClient.Vocab?
-
-    public init(
-      destination: Destination.State? = nil,
-      isAnimationReduced: Bool,
-      vocab: LocalDatabaseClient.Vocab? = nil
-    ) {
-      self.destination = destination
-      self.isAnimationReduced = isAnimationReduced
-      self.vocab = vocab
-    }
+    @Init(.public) @PresentationState var destination: Destination.State? = nil
+    @Init(.public) var isAnimationReduced: Bool
+    @Init(.public) var vocab: LocalDatabaseClient.Vocab? = nil
 
     public struct GamesResponse: Equatable {
       var games: [LocalDatabaseClient.Game]
@@ -117,12 +109,9 @@ public struct Vocab: Reducer {
   }
 }
 
+@MemberwiseInit(.public)
 public struct VocabView: View {
   public let store: StoreOf<Vocab>
-
-  public init(store: StoreOf<Vocab>) {
-    self.store = store
-  }
 
   public var body: some View {
     VStack {

@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import LeaderboardFeature
+import MemberwiseInit
 import SharedModels
 import Styleguide
 import SwiftUI
@@ -105,20 +106,11 @@ struct LeaderboardLinkView: View {
   }
 }
 
+@MemberwiseInit(.public)
 public struct LeaderboardLinkButtonStyle: ButtonStyle {
-  let backgroundColor: Color
-  let foregroundColor: Color
-  let isActive: Bool
-
-  public init(
-    backgroundColor: Color = .adaptiveBlack,
-    foregroundColor: Color = .adaptiveWhite,
-    isActive: Bool = true
-  ) {
-    self.backgroundColor = backgroundColor
-    self.foregroundColor = foregroundColor
-    self.isActive = isActive
-  }
+  @Init(.public, default: Color.adaptiveBlack) let backgroundColor: Color
+  @Init(.public, default: Color.adaptiveWhite) let foregroundColor: Color
+  @Init(.public,default: true) let isActive: Bool
 
   public func makeBody(configuration: Self.Configuration) -> some View {
     return configuration.label

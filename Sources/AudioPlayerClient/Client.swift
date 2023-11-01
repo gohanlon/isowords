@@ -1,3 +1,5 @@
+import MemberwiseInit
+
 public struct AudioPlayerClient {
   public var load: @Sendable ([Sound]) async -> Void
   public var loop: @Sendable (Sound) async -> Void
@@ -8,14 +10,10 @@ public struct AudioPlayerClient {
   public var setVolume: @Sendable (Sound, Float) async -> Void
   public var stop: @Sendable (Sound) async -> Void
 
+  @MemberwiseInit(.public)
   public struct Sound: Hashable {
     public let category: Category
     public let name: String
-
-    public init(category: Category, name: String) {
-      self.category = category
-      self.name = name
-    }
 
     public enum Category: Hashable {
       case music

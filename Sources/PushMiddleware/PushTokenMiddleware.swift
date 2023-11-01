@@ -2,10 +2,12 @@ import Build
 import DatabaseClient
 import Either
 import HttpPipeline
+import MemberwiseInit
 import Prelude
 import SharedModels
 import SnsClient
 
+@MemberwiseInit(.public)
 public struct RegisterPushTokenRequest {
   public let authorizationStatus: PushAuthorizationStatus
   public let awsPlatformApplicationArn: PlatformArn
@@ -14,24 +16,6 @@ public struct RegisterPushTokenRequest {
   public let database: DatabaseClient
   public let snsClient: SnsClient
   public let token: String
-
-  public init(
-    authorizationStatus: PushAuthorizationStatus,
-    awsPlatformApplicationArn: PlatformArn,
-    build: Build.Number,
-    currentPlayer: Player,
-    database: DatabaseClient,
-    snsClient: SnsClient,
-    token: String
-  ) {
-    self.authorizationStatus = authorizationStatus
-    self.awsPlatformApplicationArn = awsPlatformApplicationArn
-    self.build = build
-    self.currentPlayer = currentPlayer
-    self.database = database
-    self.snsClient = snsClient
-    self.token = token
-  }
 }
 
 public struct RegisterPushTokenResponse: Encodable {

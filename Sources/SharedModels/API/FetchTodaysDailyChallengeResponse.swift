@@ -1,36 +1,19 @@
 import FirstPartyMocks
 import Foundation
+import MemberwiseInit
 import Tagged
 
+@MemberwiseInit(.public)
 public struct FetchTodaysDailyChallengeResponse: Codable, Equatable {
   public var dailyChallenge: DailyChallenge
   public var yourResult: DailyChallengeResult
 
-  public init(
-    dailyChallenge: DailyChallenge,
-    yourResult: DailyChallengeResult
-  ) {
-    self.dailyChallenge = dailyChallenge
-    self.yourResult = yourResult
-  }
-
+  @MemberwiseInit(.public)
   public struct DailyChallenge: Codable, Equatable {
     public var endsAt: Date
     public var gameMode: GameMode
     public var id: SharedModels.DailyChallenge.Id
     public var language: Language
-
-    public init(
-      endsAt: Date,
-      gameMode: GameMode,
-      id: SharedModels.DailyChallenge.Id,
-      language: Language
-    ) {
-      self.endsAt = endsAt
-      self.gameMode = gameMode
-      self.id = id
-      self.language = language
-    }
   }
 }
 

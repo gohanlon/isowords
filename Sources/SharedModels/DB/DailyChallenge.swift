@@ -1,6 +1,8 @@
 import Foundation
+import MemberwiseInit
 import Tagged
 
+@MemberwiseInit(.public)
 public struct DailyChallenge: Codable, Equatable {
   public typealias Id = Tagged<Self, UUID>
   public typealias GameNumber = Tagged<(Self, gameNumber: ()), Int>
@@ -12,24 +14,6 @@ public struct DailyChallenge: Codable, Equatable {
   public var id: Id
   public var language: Language
   public var puzzle: ArchivablePuzzle
-
-  public init(
-    createdAt: Date,
-    endsAt: Date,
-    gameMode: GameMode,
-    gameNumber: GameNumber,
-    id: DailyChallenge.Id,
-    language: Language,
-    puzzle: ArchivablePuzzle
-  ) {
-    self.createdAt = createdAt
-    self.endsAt = endsAt
-    self.gameMode = gameMode
-    self.gameNumber = gameNumber
-    self.id = id
-    self.language = language
-    self.puzzle = puzzle
-  }
 }
 
 #if DEBUG

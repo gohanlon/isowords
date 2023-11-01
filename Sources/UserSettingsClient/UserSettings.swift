@@ -1,17 +1,19 @@
+import MemberwiseInit
 import Styleguide
 import UIKit
 
+@MemberwiseInit(.public)
 public struct UserSettings: Codable, Equatable {
-  public var appIcon: AppIcon?
-  public var colorScheme: ColorScheme
-  public var enableGyroMotion: Bool
-  public var enableHaptics: Bool
-  public var enableNotifications: Bool
-  public var enableReducedAnimation: Bool
-  public var musicVolume: Float
-  public var sendDailyChallengeReminder: Bool
-  public var sendDailyChallengeSummary: Bool
-  public var soundEffectsVolume: Float
+  public var appIcon: AppIcon? = nil
+  public var colorScheme: ColorScheme = .system
+  public var enableGyroMotion: Bool = true
+  public var enableHaptics: Bool = true
+  public var enableNotifications: Bool = false
+  public var enableReducedAnimation: Bool = false
+  public var musicVolume: Float = 1
+  public var sendDailyChallengeReminder: Bool = true
+  public var sendDailyChallengeSummary: Bool = true
+  public var soundEffectsVolume: Float = 1
 
   public enum ColorScheme: String, CaseIterable, Codable {
     case dark
@@ -28,30 +30,6 @@ public struct UserSettings: Codable, Equatable {
         return .unspecified
       }
     }
-  }
-
-  public init(
-    appIcon: AppIcon? = nil,
-    colorScheme: ColorScheme = .system,
-    enableGyroMotion: Bool = true,
-    enableHaptics: Bool = true,
-    enableNotifications: Bool = false,
-    enableReducedAnimation: Bool = false,
-    musicVolume: Float = 1,
-    sendDailyChallengeReminder: Bool = true,
-    sendDailyChallengeSummary: Bool = true,
-    soundEffectsVolume: Float = 1
-  ) {
-    self.appIcon = appIcon
-    self.colorScheme = colorScheme
-    self.enableGyroMotion = enableGyroMotion
-    self.enableHaptics = enableHaptics
-    self.enableNotifications = enableNotifications
-    self.enableReducedAnimation = enableReducedAnimation
-    self.musicVolume = musicVolume
-    self.sendDailyChallengeReminder = sendDailyChallengeReminder
-    self.sendDailyChallengeSummary = sendDailyChallengeSummary
-    self.soundEffectsVolume = soundEffectsVolume
   }
 
   public init(from decoder: Decoder) throws {

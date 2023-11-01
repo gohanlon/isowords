@@ -1,14 +1,12 @@
 import ComposableArchitecture
+import MemberwiseInit
 import SwiftUI
 import UpgradeInterstitialFeature
 
 public struct NagBanner: Reducer {
+  @MemberwiseInit(.public)
   public struct State: Equatable {
-    @PresentationState var upgradeInterstitial: UpgradeInterstitial.State? = nil
-
-    public init(upgradeInterstitial: UpgradeInterstitial.State? = nil) {
-      self.upgradeInterstitial = upgradeInterstitial
-    }
+    @Init(.public) @PresentationState var upgradeInterstitial: UpgradeInterstitial.State? = nil
   }
 
   public enum Action: Equatable {
@@ -42,12 +40,9 @@ public struct NagBanner: Reducer {
   }
 }
 
+@MemberwiseInit(.public)
 public struct NagBannerView: View {
-  let store: StoreOf<NagBanner>
-
-  public init(store: StoreOf<NagBanner>) {
-    self.store = store
-  }
+  @Init(.public) let store: StoreOf<NagBanner>
 
   public var body: some View {
     WithViewStore(self.store, observe: { $0 }) { viewStore in

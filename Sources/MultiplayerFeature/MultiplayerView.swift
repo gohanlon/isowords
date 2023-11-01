@@ -1,4 +1,5 @@
 import ComposableArchitecture
+import MemberwiseInit
 import SwiftUI
 import TcaHelpers
 
@@ -17,17 +18,10 @@ public struct Multiplayer: Reducer {
     }
   }
 
+  @MemberwiseInit(.public)
   public struct State: Equatable {
-    @PresentationState public var destination: Destination.State?
+    @Init @PresentationState public var destination: Destination.State? = nil
     public var hasPastGames: Bool
-
-    public init(
-      destination: Destination.State? = nil,
-      hasPastGames: Bool
-    ) {
-      self.destination = destination
-      self.hasPastGames = hasPastGames
-    }
   }
 
   public enum Action: Equatable {

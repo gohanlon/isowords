@@ -1,10 +1,10 @@
+import MemberwiseInit
+
+@MemberwiseInit(.public)
 public struct FetchVocabLeaderboardResponse: Codable, Equatable {
   public var entries: [Entry]
 
-  public init(entries: [Entry]) {
-    self.entries = entries
-  }
-
+  @MemberwiseInit(.public)
   public struct Entry: Codable, Equatable {
     public let denseRank: Int
     public let isSupporter: Bool
@@ -16,29 +16,5 @@ public struct FetchVocabLeaderboardResponse: Codable, Equatable {
     public let score: Int
     public let word: String
     public let wordId: Word.Id
-
-    public init(
-      denseRank: Int,
-      isSupporter: Bool,
-      isYourScore: Bool,
-      outOf: Int,
-      playerDisplayName: String?,
-      playerId: Player.Id,
-      rank: Int,
-      score: Int,
-      word: String,
-      wordId: Word.Id
-    ) {
-      self.denseRank = denseRank
-      self.isSupporter = isSupporter
-      self.isYourScore = isYourScore
-      self.outOf = outOf
-      self.playerDisplayName = playerDisplayName
-      self.playerId = playerId
-      self.rank = rank
-      self.score = score
-      self.word = word
-      self.wordId = wordId
-    }
   }
 }

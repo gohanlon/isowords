@@ -1,12 +1,10 @@
 import ComposableArchitecture
+import MemberwiseInit
 import SwiftUI
 
+@MemberwiseInit(.public)
 public struct CubeView: View {
   public let store: Store<CubeSceneView.ViewState, CubeSceneView.ViewAction>
-
-  public init(store: Store<CubeSceneView.ViewState, CubeSceneView.ViewAction>) {
-    self.store = store
-  }
 
   public var body: some View {
     GeometryReader { geometry in

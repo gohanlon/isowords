@@ -5,6 +5,7 @@ import ComposableGameCenter
 import ComposableUserNotifications
 import DailyChallengeHelpers
 import LocalDatabaseClient
+import MemberwiseInit
 import NotificationsAuthAlert
 import Overture
 import SharedModels
@@ -35,44 +36,19 @@ public struct GameOver: Reducer {
     }
   }
 
+  @MemberwiseInit(.public)
   public struct State: Equatable {
     public var completedGame: CompletedGame
-    public var dailyChallenges: [FetchTodaysDailyChallengeResponse]
-    @PresentationState public var destination: Destination.State?
-    public var gameModeIsLoading: GameMode?
+    public var dailyChallenges: [FetchTodaysDailyChallengeResponse] = []
+    @Init @PresentationState public var destination: Destination.State? = nil
+    public var gameModeIsLoading: GameMode? = nil
     public var isDemo: Bool
-    public var isNotificationMenuPresented: Bool
-    public var isViewEnabled: Bool
-    public var showConfetti: Bool
-    public var summary: RankSummary?
-    public var turnBasedContext: TurnBasedContext?
-    public var userNotificationSettings: UserNotificationClient.Notification.Settings?
-
-    public init(
-      completedGame: CompletedGame,
-      dailyChallenges: [FetchTodaysDailyChallengeResponse] = [],
-      destination: Destination.State? = nil,
-      gameModeIsLoading: GameMode? = nil,
-      isDemo: Bool,
-      isNotificationMenuPresented: Bool = false,
-      isViewEnabled: Bool = false,
-      showConfetti: Bool = false,
-      summary: RankSummary? = nil,
-      turnBasedContext: TurnBasedContext? = nil,
-      userNotificationSettings: UserNotificationClient.Notification.Settings? = nil
-    ) {
-      self.completedGame = completedGame
-      self.dailyChallenges = dailyChallenges
-      self.destination = destination
-      self.gameModeIsLoading = gameModeIsLoading
-      self.isDemo = isDemo
-      self.isNotificationMenuPresented = isNotificationMenuPresented
-      self.isViewEnabled = isViewEnabled
-      self.showConfetti = showConfetti
-      self.summary = summary
-      self.turnBasedContext = turnBasedContext
-      self.userNotificationSettings = userNotificationSettings
-    }
+    public var isNotificationMenuPresented: Bool = false
+    public var isViewEnabled: Bool = false
+    public var showConfetti: Bool = false
+    public var summary: RankSummary? = nil
+    public var turnBasedContext: TurnBasedContext? = nil
+    public var userNotificationSettings: UserNotificationClient.Notification.Settings? = nil
 
     public enum RankSummary: Equatable {
       case dailyChallenge(DailyChallengeResult)

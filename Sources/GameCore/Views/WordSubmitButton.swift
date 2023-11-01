@@ -1,44 +1,23 @@
 import ComposableArchitecture
+import MemberwiseInit
 import SharedModels
 import SwiftUI
 
 public struct WordSubmitButtonFeature: Reducer {
+  @MemberwiseInit(.public)
   public struct State: Equatable {
     public var isSelectedWordValid: Bool
     public let isTurnBasedMatch: Bool
     public let isYourTurn: Bool
     public var wordSubmitButton: ButtonState
-
-    public init(
-      isSelectedWordValid: Bool,
-      isTurnBasedMatch: Bool,
-      isYourTurn: Bool,
-      wordSubmitButton: ButtonState
-    ) {
-      self.isSelectedWordValid = isSelectedWordValid
-      self.isTurnBasedMatch = isTurnBasedMatch
-      self.isYourTurn = isYourTurn
-      self.wordSubmitButton = wordSubmitButton
-    }
   }
 
+  @MemberwiseInit(.public)
   public struct ButtonState: Equatable {
-    public var areReactionsOpen: Bool
-    public var favoriteReactions: [Move.Reaction]
-    public var isClosing: Bool
-    public var isSubmitButtonPressed: Bool
-
-    public init(
-      areReactionsOpen: Bool = false,
-      favoriteReactions: [Move.Reaction] = Move.Reaction.allCases,
-      isClosing: Bool = false,
-      isSubmitButtonPressed: Bool = false
-    ) {
-      self.areReactionsOpen = areReactionsOpen
-      self.favoriteReactions = favoriteReactions
-      self.isClosing = isClosing
-      self.isSubmitButtonPressed = isSubmitButtonPressed
-    }
+    public var areReactionsOpen: Bool = false
+    public var favoriteReactions: [Move.Reaction] = Move.Reaction.allCases
+    public var isClosing: Bool = false
+    public var isSubmitButtonPressed: Bool = false
   }
 
   public enum Action: Equatable {

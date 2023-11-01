@@ -3,6 +3,7 @@ import Build
 import ComposableArchitecture
 import ComposableStoreKit
 import ComposableUserNotifications
+import MemberwiseInit
 import RemoteNotificationsClient
 import SharedModels
 import StatsFeature
@@ -10,12 +11,9 @@ import StoreKit
 import UIApplicationClient
 import UserSettingsClient
 
+@MemberwiseInit(.public)
 public struct DeveloperSettings: Equatable {
-  public var currentBaseUrl: BaseUrl
-
-  public init(currentBaseUrl: BaseUrl = .production) {
-    self.currentBaseUrl = currentBaseUrl
-  }
+  public var currentBaseUrl: BaseUrl = .production
 
   public enum BaseUrl: String, CaseIterable {
     case localhost = "http://localhost:9876"

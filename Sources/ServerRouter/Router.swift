@@ -1,5 +1,6 @@
 import Build
 import Foundation
+import MemberwiseInit
 import Parsing
 import SharedModels
 import Tagged
@@ -10,26 +11,13 @@ import XCTestDynamicOverlay
   import FoundationNetworking
 #endif
 
+@MemberwiseInit(.public)
 public struct ServerRouter: ParserPrinter {
-  let date: () -> Date
-  let decoder: JSONDecoder
-  let encoder: JSONEncoder
-  let secrets: [String]
-  let sha256: (Data) -> Data
-
-  public init(
-    date: @escaping () -> Date,
-    decoder: JSONDecoder,
-    encoder: JSONEncoder,
-    secrets: [String],
-    sha256: @escaping (Data) -> Data
-  ) {
-    self.date = date
-    self.decoder = decoder
-    self.encoder = encoder
-    self.secrets = secrets
-    self.sha256 = sha256
-  }
+  @Init(.public) let date: () -> Date
+  @Init(.public) let decoder: JSONDecoder
+  @Init(.public) let encoder: JSONEncoder
+  @Init(.public) let secrets: [String]
+  @Init(.public) let sha256: (Data) -> Data
 
   public var body: some Router<ServerRoute> {
     OneOf {

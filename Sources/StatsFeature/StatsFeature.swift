@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import LocalDatabaseClient
+import MemberwiseInit
 import Styleguide
 import SwiftUI
 import VocabFeature
@@ -19,41 +20,18 @@ public struct Stats: Reducer {
     }
   }
 
+  @MemberwiseInit(.public)
   public struct State: Equatable {
-    public var averageWordLength: Double?
-    @PresentationState public var destination: Destination.State?
-    public var gamesPlayed: Int
-    public var highestScoringWord: LocalDatabaseClient.Stats.Word?
-    public var highScoreTimed: Int?
-    public var highScoreUnlimited: Int?
-    public var isAnimationReduced: Bool
-    public var longestWord: String?
-    public var secondsPlayed: Int
-    public var wordsFound: Int
-
-    public init(
-      averageWordLength: Double? = nil,
-      destination: Destination.State? = nil,
-      gamesPlayed: Int = 0,
-      highestScoringWord: LocalDatabaseClient.Stats.Word? = nil,
-      highScoreTimed: Int? = nil,
-      highScoreUnlimited: Int? = nil,
-      isAnimationReduced: Bool = false,
-      longestWord: String? = nil,
-      secondsPlayed: Int = 0,
-      wordsFound: Int = 0
-    ) {
-      self.averageWordLength = averageWordLength
-      self.destination = destination
-      self.gamesPlayed = gamesPlayed
-      self.highestScoringWord = highestScoringWord
-      self.highScoreTimed = highScoreTimed
-      self.highScoreUnlimited = highScoreUnlimited
-      self.isAnimationReduced = isAnimationReduced
-      self.longestWord = longestWord
-      self.secondsPlayed = secondsPlayed
-      self.wordsFound = wordsFound
-    }
+    public var averageWordLength: Double? = nil
+    @Init @PresentationState public var destination: Destination.State? = nil
+    public var gamesPlayed: Int = 0
+    public var highestScoringWord: LocalDatabaseClient.Stats.Word? = nil
+    public var highScoreTimed: Int? = nil
+    public var highScoreUnlimited: Int? = nil
+    public var isAnimationReduced: Bool = false
+    public var longestWord: String? = nil
+    public var secondsPlayed: Int = 0
+    public var wordsFound: Int = 0
   }
 
   public enum Action: Equatable {

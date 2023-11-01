@@ -3,28 +3,18 @@ import Either
 import EnvVars
 import Foundation
 import HttpPipeline
+import MemberwiseInit
 import MiddlewareHelpers
 import Prelude
 import ServerRouter
 import SharedModels
 
+@MemberwiseInit(.public)
 public struct VerifyReceiptRequest {
   public let database: DatabaseClient
   public let itunes: ItunesClient
   public let receiptData: Data
   public let currentPlayer: Player
-
-  public init(
-    database: DatabaseClient,
-    itunes: ItunesClient,
-    receiptData: Data,
-    currentPlayer: Player
-  ) {
-    self.database = database
-    self.itunes = itunes
-    self.receiptData = receiptData
-    self.currentPlayer = currentPlayer
-  }
 }
 
 public func verifyReceiptMiddleware(

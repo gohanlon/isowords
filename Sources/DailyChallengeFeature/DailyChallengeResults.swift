@@ -1,22 +1,16 @@
 import ApiClient
 import ComposableArchitecture
 import LeaderboardFeature
+import MemberwiseInit
 import SharedModels
 import SwiftUI
 
 public struct DailyChallengeResults: Reducer {
+  @MemberwiseInit(.public)
   public struct State: Equatable {
-    public var history: DailyChallengeHistoryResponse?
-    public var leaderboardResults: LeaderboardResults<DailyChallenge.GameNumber?>.State
-
-    public init(
-      history: DailyChallengeHistoryResponse? = nil,
-      leaderboardResults: LeaderboardResults<DailyChallenge.GameNumber?>.State =
-        .init(timeScope: nil)
-    ) {
-      self.history = history
-      self.leaderboardResults = leaderboardResults
-    }
+    public var history: DailyChallengeHistoryResponse? = nil
+    public var leaderboardResults: LeaderboardResults<DailyChallenge.GameNumber?>.State = .init(
+      timeScope: nil)
   }
 
   public enum Action: Equatable {

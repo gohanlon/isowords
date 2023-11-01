@@ -1,15 +1,12 @@
 import Foundation
+import MemberwiseInit
 import Tagged
 
+@MemberwiseInit(.public)
 public struct FetchDailyChallengeResultsResponse: Codable, Equatable {
   public var results: [Result]
 
-  public init(
-    results: [Result]
-  ) {
-    self.results = results
-  }
-
+  @MemberwiseInit(.public)
   public struct Result: Codable, Equatable {
     public var isSupporter: Bool
     public var isYourScore: Bool
@@ -18,23 +15,5 @@ public struct FetchDailyChallengeResultsResponse: Codable, Equatable {
     public var playerId: Player.Id
     public var rank: Int
     public var score: Int
-
-    public init(
-      isSupporter: Bool,
-      isYourScore: Bool,
-      outOf: Int,
-      playerDisplayName: String?,
-      playerId: Player.Id,
-      rank: Int,
-      score: Int
-    ) {
-      self.isSupporter = isSupporter
-      self.isYourScore = isYourScore
-      self.outOf = outOf
-      self.playerDisplayName = playerDisplayName
-      self.playerId = playerId
-      self.rank = rank
-      self.score = score
-    }
   }
 }

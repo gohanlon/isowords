@@ -1,7 +1,9 @@
 import ClientModels
 import GameKit
+import MemberwiseInit
 import SharedModels
 
+@MemberwiseInit(.public)
 public struct CompletedMatch: Equatable {
   public let isTurnBased: Bool
   public let theirName: String
@@ -10,24 +12,6 @@ public struct CompletedMatch: Equatable {
   public let theirWords: [PlayedWord]
   public let yourName: String
   public let yourOutcome: GKTurnBasedMatch.Outcome
-
-  public init(
-    isTurnBased: Bool,
-    theirName: String,
-    theirOutcome: GKTurnBasedMatch.Outcome,
-    theirScore: Int,
-    theirWords: [PlayedWord],
-    yourName: String,
-    yourOutcome: GKTurnBasedMatch.Outcome
-  ) {
-    self.isTurnBased = isTurnBased
-    self.theirName = theirName
-    self.theirOutcome = theirOutcome
-    self.theirScore = theirScore
-    self.theirWords = theirWords
-    self.yourName = yourName
-    self.yourOutcome = yourOutcome
-  }
 }
 
 extension CompletedMatch {

@@ -2,12 +2,14 @@ import ClientModels
 import Combine
 import ComposableArchitecture
 import CoreMotion
+import MemberwiseInit
 import SceneKit
 import SharedModels
 import Styleguide
 import SwiftUI
 
 public class CubeSceneView: SCNView, UIGestureRecognizerDelegate {
+  //@MemberwiseInit(.public)  // 🛑 Circular reference resolving attached macro 'MemberwiseInit'
   public struct ViewState: Equatable {
     public typealias ViewPuzzle = Three<Three<Three<CubeNode.ViewState>>>
 
@@ -40,20 +42,11 @@ public class CubeSceneView: SCNView, UIGestureRecognizerDelegate {
       self.selectedWordString = selectedWordString
     }
 
+    @MemberwiseInit(.public)
     public struct NubState: Equatable {
-      public var duration: TimeInterval
-      public var location: Location
-      public var isPressed: Bool
-
-      public init(
-        duration: TimeInterval = 0,
-        location: Location = .offScreenRight,
-        isPressed: Bool = false
-      ) {
-        self.duration = duration
-        self.location = location
-        self.isPressed = isPressed
-      }
+      public var duration: TimeInterval = 0
+      public var location: Location = .offScreenRight
+      public var isPressed: Bool = false
 
       public enum Location: Equatable {
         case face(IndexedCubeFace)

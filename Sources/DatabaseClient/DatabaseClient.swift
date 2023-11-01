@@ -1,9 +1,11 @@
 import Build
 import Either
 import Foundation
+import MemberwiseInit
 import SharedModels
 import SnsClient
 
+@MemberwiseInit(.public)
 public struct DatabaseClient {
   public var completeDailyChallenge:
     (DailyChallenge.Id, Player.Id) -> EitherIO<Error, DailyChallengePlay>
@@ -52,98 +54,6 @@ public struct DatabaseClient {
   public var updatePushSetting:
     (Player.Id, PushNotificationContent.CodingKeys, Bool) -> EitherIO<Error, Void>
 
-  public init(
-    completeDailyChallenge: @escaping (DailyChallenge.Id, Player.Id) -> EitherIO<
-      Error, DailyChallengePlay
-    >,
-    createTodaysDailyChallenge: @escaping (CreateTodaysDailyChallengeRequest) -> EitherIO<
-      Error, DailyChallenge
-    >,
-    fetchActiveDailyChallengeArns: @escaping () -> EitherIO<Error, [DailyChallengeArn]>,
-    fetchAppleReceipt: @escaping (Player.Id) -> EitherIO<Error, AppleReceipt?>,
-    fetchDailyChallengeById: @escaping (DailyChallenge.Id) -> EitherIO<Error, DailyChallenge>,
-    fetchDailyChallengeHistory: @escaping (DailyChallengeHistoryRequest) -> EitherIO<
-      Error, [DailyChallengeHistoryResponse.Result]
-    >,
-    fetchDailyChallengeReport: @escaping (DailyChallengeReportRequest) -> EitherIO<
-      Error, [DailyChallengeReportResult]
-    >,
-    fetchDailyChallengeResult: @escaping (DailyChallengeRankRequest) -> EitherIO<
-      Error, DailyChallengeResult
-    >,
-    fetchDailyChallengeResults: @escaping (DailyChallengeResultsRequest) -> EitherIO<
-      Error, [FetchDailyChallengeResultsResponse.Result]
-    >,
-    fetchLeaderboardSummary: @escaping (FetchLeaderboardSummaryRequest) -> EitherIO<
-      Error, LeaderboardScoreResult.Rank
-    >,
-    fetchLeaderboardWeeklyRanks: @escaping (Language, Player) -> EitherIO<
-      Error, [FetchWeekInReviewResponse.Rank]
-    >,
-    fetchLeaderboardWeeklyWord: @escaping (Language, Player) -> EitherIO<
-      Error, FetchWeekInReviewResponse.Word?
-    >,
-    fetchPlayerByAccessToken: @escaping (AccessToken) -> EitherIO<Error, Player?>,
-    fetchPlayerByDeviceId: @escaping (DeviceId) -> EitherIO<Error, Player?>,
-    fetchPlayerByGameCenterLocalPlayerId: @escaping (GameCenterLocalPlayerId) -> EitherIO<
-      Error, Player?
-    >,
-    fetchRankedLeaderboardScores: @escaping (FetchLeaderboardRequest) -> EitherIO<
-      Error, [FetchLeaderboardResponse.Entry]
-    >,
-    fetchSharedGame: @escaping (SharedGame.Code) -> EitherIO<Error, SharedGame>,
-    fetchTodaysDailyChallenges: @escaping (Language) -> EitherIO<Error, [DailyChallenge]>,
-    fetchVocabLeaderboard: @escaping (Language, Player, TimeScope) -> EitherIO<
-      Error, [FetchVocabLeaderboardResponse.Entry]
-    >,
-    fetchVocabLeaderboardWord: @escaping (Word.Id) -> EitherIO<Error, FetchVocabWordResponse>,
-    insertPlayer: @escaping (InsertPlayerRequest) -> EitherIO<Error, Player>,
-    insertPushToken: @escaping (InsertPushTokenRequest) -> EitherIO<Error, Void>,
-    insertSharedGame: @escaping (CompletedGame, Player) -> EitherIO<Error, SharedGame>,
-    migrate: @escaping () -> EitherIO<Error, Void>,
-    shutdown: @escaping () -> EitherIO<Error, Void>,
-    startDailyChallenge: @escaping (DailyChallenge.Id, Player.Id) -> EitherIO<
-      Error, DailyChallengePlay
-    >,
-    submitLeaderboardScore: @escaping (SubmitLeaderboardScore) -> EitherIO<Error, LeaderboardScore>,
-    updateAppleReceipt: @escaping (Player.Id, AppleVerifyReceiptResponse) -> EitherIO<Error, Void>,
-    updatePlayer: @escaping (UpdatePlayerRequest) -> EitherIO<Error, Player>,
-    updatePushSetting: @escaping (Player.Id, PushNotificationContent.CodingKeys, Bool) -> EitherIO<
-      Error, Void
-    >
-  ) {
-    self.completeDailyChallenge = completeDailyChallenge
-    self.createTodaysDailyChallenge = createTodaysDailyChallenge
-    self.fetchActiveDailyChallengeArns = fetchActiveDailyChallengeArns
-    self.fetchAppleReceipt = fetchAppleReceipt
-    self.fetchDailyChallengeById = fetchDailyChallengeById
-    self.fetchDailyChallengeHistory = fetchDailyChallengeHistory
-    self.fetchDailyChallengeReport = fetchDailyChallengeReport
-    self.fetchDailyChallengeResult = fetchDailyChallengeResult
-    self.fetchDailyChallengeResults = fetchDailyChallengeResults
-    self.fetchLeaderboardSummary = fetchLeaderboardSummary
-    self.fetchLeaderboardWeeklyRanks = fetchLeaderboardWeeklyRanks
-    self.fetchLeaderboardWeeklyWord = fetchLeaderboardWeeklyWord
-    self.fetchPlayerByAccessToken = fetchPlayerByAccessToken
-    self.fetchPlayerByDeviceId = fetchPlayerByDeviceId
-    self.fetchPlayerByGameCenterLocalPlayerId = fetchPlayerByGameCenterLocalPlayerId
-    self.fetchRankedLeaderboardScores = fetchRankedLeaderboardScores
-    self.fetchSharedGame = fetchSharedGame
-    self.fetchTodaysDailyChallenges = fetchTodaysDailyChallenges
-    self.fetchVocabLeaderboard = fetchVocabLeaderboard
-    self.fetchVocabLeaderboardWord = fetchVocabLeaderboardWord
-    self.insertPlayer = insertPlayer
-    self.insertPushToken = insertPushToken
-    self.insertSharedGame = insertSharedGame
-    self.migrate = migrate
-    self.shutdown = shutdown
-    self.startDailyChallenge = startDailyChallenge
-    self.submitLeaderboardScore = submitLeaderboardScore
-    self.updateAppleReceipt = updateAppleReceipt
-    self.updatePlayer = updatePlayer
-    self.updatePushSetting = updatePushSetting
-  }
-
   public struct DailyChallengeReportResult: Codable, Equatable {
     public let arn: EndpointArn
     public let gameMode: GameMode
@@ -152,67 +62,34 @@ public struct DatabaseClient {
     public let score: Int?
   }
 
+  @MemberwiseInit(.public)
   public struct DailyChallengeArn: Codable, Equatable {
     public var arn: EndpointArn
     public var endsAt: Date
-
-    public init(
-      arn: EndpointArn,
-      endsAt: Date
-    ) {
-      self.arn = arn
-      self.endsAt = endsAt
-    }
   }
 
+  @MemberwiseInit(.public)
   public struct DailyChallengeResultsRequest {
     public let gameMode: GameMode
     public let gameNumber: DailyChallenge.GameNumber?
     public let language: Language
     public let playerId: Player.Id
-
-    public init(
-      gameMode: GameMode,
-      gameNumber: DailyChallenge.GameNumber?,
-      language: Language,
-      playerId: Player.Id
-    ) {
-      self.gameMode = gameMode
-      self.gameNumber = gameNumber
-      self.language = language
-      self.playerId = playerId
-    }
   }
 
+  @MemberwiseInit(.public)
   public struct DailyChallengeHistoryRequest {
     public let gameMode: GameMode
     public let language: Language
     public let playerId: Player.Id
-
-    public init(
-      gameMode: GameMode,
-      language: Language,
-      playerId: Player.Id
-    ) {
-      self.gameMode = gameMode
-      self.language = language
-      self.playerId = playerId
-    }
   }
 
+  @MemberwiseInit(.public)
   public struct DailyChallengeReportRequest {
     public let gameMode: GameMode
     public let language: Language
-
-    public init(
-      gameMode: GameMode,
-      language: Language
-    ) {
-      self.gameMode = gameMode
-      self.language = language
-    }
   }
 
+  @MemberwiseInit(.public)
   public struct FetchLeaderboardSummaryRequest {
     public let gameMode: GameMode
     public let timeScope: TimeScope
@@ -222,70 +99,29 @@ public struct DatabaseClient {
       case player(scoreId: LeaderboardScore.Id, playerId: Player.Id)
       case anonymous(score: Int)
     }
-
-    public init(
-      gameMode: GameMode,
-      timeScope: TimeScope,
-      type: SummaryType
-    ) {
-      self.gameMode = gameMode
-      self.timeScope = timeScope
-      self.type = type
-    }
   }
 
+  @MemberwiseInit(.public)
   public struct FetchLeaderboardRequest {
     public let gameMode: GameMode
     public let language: Language
     public let playerId: Player.Id
     public let timeScope: TimeScope
-
-    public init(
-      gameMode: GameMode,
-      language: Language,
-      playerId: Player.Id,
-      timeScope: TimeScope
-    ) {
-      self.gameMode = gameMode
-      self.language = language
-      self.playerId = playerId
-      self.timeScope = timeScope
-    }
   }
 
+  @MemberwiseInit(.public)
   public struct CreateTodaysDailyChallengeRequest {
     public let gameMode: GameMode
     public let language: Language
     public let puzzle: ArchivablePuzzle
-
-    public init(
-      gameMode: GameMode,
-      language: Language,
-      puzzle: ArchivablePuzzle
-    ) {
-      self.gameMode = gameMode
-      self.language = language
-      self.puzzle = puzzle
-    }
   }
 
+  @MemberwiseInit(.public)
   public struct InsertPlayerRequest: Equatable {
     public var deviceId: DeviceId
     public var displayName: String?
     public var gameCenterLocalPlayerId: GameCenterLocalPlayerId?
     public var timeZone: String
-
-    public init(
-      deviceId: DeviceId,
-      displayName: String?,
-      gameCenterLocalPlayerId: GameCenterLocalPlayerId?,
-      timeZone: String
-    ) {
-      self.deviceId = deviceId
-      self.displayName = displayName
-      self.gameCenterLocalPlayerId = gameCenterLocalPlayerId
-      self.timeZone = timeZone
-    }
 
     #if DEBUG
       public static let blob = Self(
@@ -311,26 +147,13 @@ public struct DatabaseClient {
     #endif
   }
 
+  @MemberwiseInit(.public)
   public struct InsertPushTokenRequest: Equatable {
     public let arn: String
     public let authorizationStatus: PushAuthorizationStatus
     public let build: Build.Number
     public let player: Player
     public let token: String
-
-    public init(
-      arn: String,
-      authorizationStatus: PushAuthorizationStatus,
-      build: Build.Number,
-      player: Player,
-      token: String
-    ) {
-      self.arn = arn
-      self.authorizationStatus = authorizationStatus
-      self.build = build
-      self.player = player
-      self.token = token
-    }
   }
 
   public struct LeaderboardWeeklyRank: Codable, Equatable {
@@ -344,6 +167,7 @@ public struct DatabaseClient {
     public let score: Int
   }
 
+  @MemberwiseInit(.public)
   public struct SubmitLeaderboardScore: Equatable {
     public let dailyChallengeId: DailyChallenge.Id?
     public let gameContext: GameContext
@@ -355,28 +179,6 @@ public struct DatabaseClient {
     public let score: Int
     public let words: [SubmitLeaderboardWord]
 
-    public init(
-      dailyChallengeId: DailyChallenge.Id?,
-      gameContext: GameContext,
-      gameMode: GameMode,
-      language: Language,
-      moves: Moves,
-      playerId: Player.Id,
-      puzzle: ArchivablePuzzle,
-      score: Int,
-      words: [SubmitLeaderboardWord]
-    ) {
-      self.dailyChallengeId = dailyChallengeId
-      self.gameContext = gameContext
-      self.gameMode = gameMode
-      self.language = language
-      self.moves = moves
-      self.playerId = playerId
-      self.puzzle = puzzle
-      self.score = score
-      self.words = words
-    }
-
     public enum GameContext: String, Codable, Equatable {
       case dailyChallenge
       case solo
@@ -384,51 +186,24 @@ public struct DatabaseClient {
     }
   }
 
+  @MemberwiseInit(.public)
   public struct SubmitLeaderboardWord: Equatable {
     public let moveIndex: Int
     public let score: Int
     public let word: String
-
-    public init(
-      moveIndex: Int,
-      score: Int,
-      word: String
-    ) {
-      self.moveIndex = moveIndex
-      self.score = score
-      self.word = word
-    }
   }
 
+  @MemberwiseInit(.public)
   public struct DailyChallengeRankRequest: Equatable {
     public let dailyChallengeId: DailyChallenge.Id
     public let playerId: Player.Id
-
-    public init(
-      dailyChallengeId: DailyChallenge.Id,
-      playerId: Player.Id
-    ) {
-      self.dailyChallengeId = dailyChallengeId
-      self.playerId = playerId
-    }
   }
 
+  @MemberwiseInit(.public)
   public struct UpdatePlayerRequest {
     public let displayName: String?
     public let gameCenterLocalPlayerId: GameCenterLocalPlayerId?
     public let playerId: Player.Id
     public let timeZone: String
-
-    public init(
-      displayName: String?,
-      gameCenterLocalPlayerId: GameCenterLocalPlayerId?,
-      playerId: Player.Id,
-      timeZone: String
-    ) {
-      self.displayName = displayName
-      self.gameCenterLocalPlayerId = gameCenterLocalPlayerId
-      self.playerId = playerId
-      self.timeZone = timeZone
-    }
   }
 }

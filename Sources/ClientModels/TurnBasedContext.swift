@@ -1,22 +1,14 @@
 import ComposableGameCenter
 import Foundation
+import MemberwiseInit
 import SharedModels
 import Tagged
 
+@MemberwiseInit(.public)
 public struct TurnBasedContext: Equatable {
   public var localPlayer: LocalPlayer
   public var match: TurnBasedMatch
   public var metadata: TurnBasedMatchData.Metadata
-
-  public init(
-    localPlayer: LocalPlayer,
-    match: TurnBasedMatch,
-    metadata: TurnBasedMatchData.Metadata
-  ) {
-    self.localPlayer = localPlayer
-    self.match = match
-    self.metadata = metadata
-  }
 
   public var currentParticipantIsLocalPlayer: Bool {
     self.match.currentParticipant?.player?.gamePlayerId == self.localPlayer.gamePlayerId

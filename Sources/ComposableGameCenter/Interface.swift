@@ -1,6 +1,7 @@
 import Combine
 import ComposableArchitecture
 import GameKit
+import MemberwiseInit
 import Tagged
 
 public struct GameCenterClient {
@@ -11,14 +12,10 @@ public struct GameCenterClient {
   public var turnBasedMatch: TurnBasedMatchClient
   public var turnBasedMatchmakerViewController: TurnBasedMatchmakerViewControllerClient
 
+  @MemberwiseInit(.public)
   public struct NotificationBannerRequest: Equatable {
-    public var message: String?
     public var title: String?
-
-    public init(title: String?, message: String?) {
-      self.title = title
-      self.message = message
-    }
+    public var message: String?
   }
 }
 
@@ -80,61 +77,28 @@ public struct TurnBasedMatchClient {
   public var saveCurrentTurn: @Sendable (TurnBasedMatch.Id, Data) async throws -> Void
   public var sendReminder: @Sendable (SendReminderRequest) async throws -> Void
 
+  @MemberwiseInit(.public)
   public struct EndMatchInTurnRequest: Equatable {
-    public var localPlayerMatchOutcome: GKTurnBasedMatch.Outcome
-    public var localPlayerId: Player.Id
-    public var matchId: TurnBasedMatch.Id
+    @Init(label: "for") public var matchId: TurnBasedMatch.Id
     public var matchData: Data
+    public var localPlayerId: Player.Id
+    public var localPlayerMatchOutcome: GKTurnBasedMatch.Outcome
     public var message: String?
-
-    public init(
-      for matchId: TurnBasedMatch.Id,
-      matchData: Data,
-      localPlayerId: Player.Id,
-      localPlayerMatchOutcome: GKTurnBasedMatch.Outcome,
-      message: String?
-    ) {
-      self.localPlayerMatchOutcome = localPlayerMatchOutcome
-      self.localPlayerId = localPlayerId
-      self.matchId = matchId
-      self.matchData = matchData
-      self.message = message
-    }
   }
 
+  @MemberwiseInit(.public)
   public struct EndTurnRequest: Equatable {
-    public var matchId: TurnBasedMatch.Id
+    @Init(label: "for") public var matchId: TurnBasedMatch.Id
     public var matchData: Data
     public var message: String
-
-    public init(
-      for matchId: TurnBasedMatch.Id,
-      matchData: Data,
-      message: String
-    ) {
-      self.matchId = matchId
-      self.matchData = matchData
-      self.message = message
-    }
   }
 
+  @MemberwiseInit(.public)
   public struct SendReminderRequest: Equatable {
+    @Init(label: "for") public var matchId: TurnBasedMatch.Id
+    @Init(label: "to") public var participantsAtIndices: [Int]
+    @Init(label: "localizableMessageKey") public var key: String
     public var arguments: [String]
-    public var key: String
-    public var matchId: TurnBasedMatch.Id
-    public var participantsAtIndices: [Int]
-
-    public init(
-      for matchId: TurnBasedMatch.Id,
-      to participantsAtIndices: [Int],
-      localizableMessageKey key: String,
-      arguments: [String]
-    ) {
-      self.arguments = arguments
-      self.key = key
-      self.matchId = matchId
-      self.participantsAtIndices = participantsAtIndices
-    }
   }
 }
 

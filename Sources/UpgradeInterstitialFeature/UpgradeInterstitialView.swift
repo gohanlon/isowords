@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import ComposableStoreKit
+import MemberwiseInit
 import ServerConfigClient
 import StoreKit
 import Styleguide
@@ -14,26 +15,13 @@ public enum GameContext: String, Codable {
 }
 
 public struct UpgradeInterstitial: Reducer {
+  @MemberwiseInit(.public)
   public struct State: Equatable {
-    public var fullGameProduct: StoreKitClient.Product?
-    public var isDismissable: Bool
-    public var isPurchasing: Bool
-    public var secondsPassedCount: Int
-    public var upgradeInterstitialDuration: Int
-
-    public init(
-      fullGameProduct: StoreKitClient.Product? = nil,
-      isDismissable: Bool = false,
-      isPurchasing: Bool = false,
-      secondsPassedCount: Int = 0,
-      upgradeInterstitialDuration: Int = ServerConfig.UpgradeInterstitial.default.duration
-    ) {
-      self.fullGameProduct = fullGameProduct
-      self.isDismissable = isDismissable
-      self.isPurchasing = isPurchasing
-      self.secondsPassedCount = secondsPassedCount
-      self.upgradeInterstitialDuration = upgradeInterstitialDuration
-    }
+    public var fullGameProduct: StoreKitClient.Product? = nil
+    public var isDismissable: Bool = false
+    public var isPurchasing: Bool = false
+    public var secondsPassedCount: Int = 0
+    public var upgradeInterstitialDuration: Int = ServerConfig.UpgradeInterstitial.default.duration
   }
 
   public enum Action: Equatable {
@@ -153,13 +141,10 @@ public struct UpgradeInterstitial: Reducer {
   }
 }
 
+@MemberwiseInit(.public)
 public struct UpgradeInterstitialView: View {
   @Environment(\.colorScheme) var colorScheme
-  let store: StoreOf<UpgradeInterstitial>
-
-  public init(store: StoreOf<UpgradeInterstitial>) {
-    self.store = store
-  }
+  @Init(.public) let store: StoreOf<UpgradeInterstitial>
 
   public var body: some View {
     WithViewStore(self.store, observe: { $0 }) { viewStore in

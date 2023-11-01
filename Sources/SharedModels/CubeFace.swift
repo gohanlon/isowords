@@ -1,17 +1,10 @@
+import MemberwiseInit
+
+@MemberwiseInit(.public)
 public struct CubeFace: Codable, Equatable {
   public var letter: String
   public var side: Side
-  public var useCount: Int
-
-  public init(
-    letter: String,
-    side: Side,
-    useCount: Int = 0
-  ) {
-    self.letter = letter
-    self.side = side
-    self.useCount = useCount
-  }
+  public var useCount: Int = 0
 
   public init(archivableCubeFaceState state: ArchivableCubeFace) {
     self.init(

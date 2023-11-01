@@ -3,6 +3,7 @@ import ComposableArchitecture
 import ComposableUserNotifications
 import DailyChallengeHelpers
 import DateHelpers
+import MemberwiseInit
 import NotificationsAuthAlert
 import Overture
 import SharedModels
@@ -34,26 +35,13 @@ public struct DailyChallengeReducer: Reducer {
     }
   }
 
+  @MemberwiseInit(.public)
   public struct State: Equatable {
-    public var dailyChallenges: [FetchTodaysDailyChallengeResponse]
-    @PresentationState public var destination: Destination.State?
-    public var gameModeIsLoading: GameMode?
-    public var inProgressDailyChallengeUnlimited: InProgressGame?
-    public var userNotificationSettings: UserNotificationClient.Notification.Settings?
-
-    public init(
-      dailyChallenges: [FetchTodaysDailyChallengeResponse] = [],
-      destination: Destination.State? = nil,
-      gameModeIsLoading: GameMode? = nil,
-      inProgressDailyChallengeUnlimited: InProgressGame? = nil,
-      userNotificationSettings: UserNotificationClient.Notification.Settings? = nil
-    ) {
-      self.dailyChallenges = dailyChallenges
-      self.destination = destination
-      self.gameModeIsLoading = gameModeIsLoading
-      self.inProgressDailyChallengeUnlimited = inProgressDailyChallengeUnlimited
-      self.userNotificationSettings = userNotificationSettings
-    }
+    public var dailyChallenges: [FetchTodaysDailyChallengeResponse] = []
+    @Init @PresentationState public var destination: Destination.State? = nil
+    public var gameModeIsLoading: GameMode? = nil
+    public var inProgressDailyChallengeUnlimited: InProgressGame? = nil
+    public var userNotificationSettings: UserNotificationClient.Notification.Settings? = nil
   }
 
   public enum Action: Equatable {

@@ -1,6 +1,8 @@
 import Foundation
+import MemberwiseInit
 import Tagged
 
+@MemberwiseInit(.public)
 public struct SharedGame: Codable, Equatable {
   public typealias Code = Tagged<Self, String>
   public typealias Id = Tagged<Self, UUID>
@@ -13,24 +15,4 @@ public struct SharedGame: Codable, Equatable {
   public let moves: Moves
   public let playerId: Player.Id
   public let puzzle: ArchivablePuzzle
-
-  public init(
-    code: Code,
-    createdAt: Date,
-    gameMode: GameMode,
-    id: Id,
-    language: Language,
-    moves: Moves,
-    playerId: Player.Id,
-    puzzle: ArchivablePuzzle
-  ) {
-    self.code = code
-    self.createdAt = createdAt
-    self.id = id
-    self.language = language
-    self.moves = moves
-    self.gameMode = gameMode
-    self.playerId = playerId
-    self.puzzle = puzzle
-  }
 }

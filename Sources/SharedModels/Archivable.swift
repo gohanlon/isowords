@@ -1,14 +1,9 @@
+import MemberwiseInit
+
+@MemberwiseInit(.public)
 public struct ArchivableCubeFace: Codable, Equatable, Sendable {
   public var letter: String
   public var side: CubeFace.Side
-
-  public init(
-    letter: String,
-    side: CubeFace.Side
-  ) {
-    self.letter = letter
-    self.side = side
-  }
 
   public init(cubeFace: CubeFace) {
     self.letter = cubeFace.letter
@@ -16,20 +11,11 @@ public struct ArchivableCubeFace: Codable, Equatable, Sendable {
   }
 }
 
+@MemberwiseInit(.public)
 public struct ArchivableCube: Codable, Equatable, Sendable {
   public var left: ArchivableCubeFace
   public var right: ArchivableCubeFace
   public var top: ArchivableCubeFace
-
-  public init(
-    left: ArchivableCubeFace,
-    right: ArchivableCubeFace,
-    top: ArchivableCubeFace
-  ) {
-    self.left = left
-    self.right = right
-    self.top = top
-  }
 
   public init(cube: Cube) {
     self.left = .init(cubeFace: cube.left)

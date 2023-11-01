@@ -1,16 +1,10 @@
 import CustomDump
+import MemberwiseInit
 
+@MemberwiseInit(.public)
 public struct IndexedCubeFace: Codable, Hashable, Sendable {
   public var index: LatticePoint
   public var side: CubeFace.Side
-
-  public init(
-    index: LatticePoint,
-    side: CubeFace.Side
-  ) {
-    self.index = index
-    self.side = side
-  }
 
   public func isTouching(_ other: IndexedCubeFace) -> Bool {
     guard self != other else { return false }

@@ -1,3 +1,5 @@
+import MemberwiseInit
+
 public struct CreatePlatformEndpointResponse: Decodable {
   public let response: Response
 
@@ -33,34 +35,25 @@ public struct DeleteEndpointResponse: Decodable {
   }
 }
 
+@MemberwiseInit(.public)
 public struct PublishResponse: Decodable {
   public let response: Response
-
-  public init(response: Response) {
-    self.response = response
-  }
 
   private enum CodingKeys: String, CodingKey {
     case response = "PublishResponse"
   }
 
+  @MemberwiseInit(.public)
   public struct Response: Decodable {
     public let result: Result
-
-    public init(result: Result) {
-      self.result = result
-    }
 
     private enum CodingKeys: String, CodingKey {
       case result = "PublishResult"
     }
 
+    @MemberwiseInit(.public)
     public struct Result: Decodable {
       public let messageId: String
-
-      public init(messageId: String) {
-        self.messageId = messageId
-      }
 
       private enum CodingKeys: String, CodingKey {
         case messageId = "MessageId"

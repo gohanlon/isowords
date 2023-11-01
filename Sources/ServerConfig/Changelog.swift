@@ -1,28 +1,15 @@
 import Build
+import MemberwiseInit
 
+@MemberwiseInit(.public)
 public struct Changelog: Codable, Hashable {
   public var changes: [Change]
 
-  public init(
-    changes: [Change]
-  ) {
-    self.changes = changes
-  }
-
+  @MemberwiseInit(.public)
   public struct Change: Codable, Hashable {
+    public var version: String
     public var build: Build.Number
     public var log: String
-    public var version: String
-
-    public init(
-      version: String,
-      build: Build.Number,
-      log: String
-    ) {
-      self.build = build
-      self.log = log
-      self.version = version
-    }
   }
 }
 

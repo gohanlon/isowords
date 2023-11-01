@@ -1,4 +1,4 @@
-// swift-tools-version:5.7
+// swift-tools-version:5.9
 
 import Foundation
 import PackageDescription
@@ -27,6 +27,7 @@ var package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-crypto", from: "1.1.6"),
+    .package(url: "https://github.com/gohanlon/swift-memberwise-init-macro", branch: "main"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.0.0"),
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.1.0"),
     .package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "1.0.0"),
@@ -43,7 +44,8 @@ var package = Package(
     .target(
       name: "Build",
       dependencies: [
-        .product(name: "Dependencies", package: "swift-composable-architecture"),
+        .product(name: "Dependencies", package: "swift-dependencies"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
         .product(name: "Tagged", package: "swift-tagged"),
         .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
       ]
@@ -59,7 +61,8 @@ var package = Package(
       name: "DictionaryClient",
       dependencies: [
         "SharedModels",
-        .product(name: "Dependencies", package: "swift-composable-architecture"),
+        .product(name: "Dependencies", package: "swift-dependencies"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
         .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
       ]
     ),
@@ -115,6 +118,7 @@ var package = Package(
       name: "ServerRouter",
       dependencies: [
         "SharedModels",
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
         .product(name: "Tagged", package: "swift-tagged"),
         .product(name: "Parsing", package: "swift-parsing"),
         .product(name: "URLRouting", package: "swift-url-routing"),
@@ -145,6 +149,7 @@ var package = Package(
         "Build",
         "FirstPartyMocks",
         .product(name: "CustomDump", package: "swift-custom-dump"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
         .product(name: "Tagged", package: "swift-tagged"),
       ]
     ),
@@ -239,10 +244,14 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "Styleguide",
         "TcaHelpers",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ]
     ),
     .target(
-      name: "AnyComparable"
+      name: "AnyComparable",
+      dependencies: [
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro")
+      ]
     ),
     .target(
       name: "ApiClient",
@@ -250,7 +259,8 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "SharedModels",
         "XCTestDebugSupport",
         .product(name: "CasePaths", package: "swift-case-paths"),
-        .product(name: "Dependencies", package: "swift-composable-architecture"),
+        .product(name: "Dependencies", package: "swift-dependencies"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
         .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
       ]
     ),
@@ -261,7 +271,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "ServerRouter",
         "SharedModels",
         "TcaHelpers",
-        .product(name: "Dependencies", package: "swift-composable-architecture"),
+        .product(name: "Dependencies", package: "swift-dependencies"),
       ],
       exclude: ["Secrets.swift.example"]
     ),
@@ -309,6 +319,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "VocabFeature",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         .product(name: "Gen", package: "swift-gen"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
         .product(name: "Tagged", package: "swift-tagged"),
         .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
       ]
@@ -337,6 +348,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
       name: "AudioPlayerClient",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
         .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
       ]
     ),
@@ -346,6 +358,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "Styleguide",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         .product(name: "Gen", package: "swift-gen"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ]
     ),
     .target(
@@ -353,6 +366,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
       dependencies: [
         "Styleguide",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ]
     ),
     .target(
@@ -368,6 +382,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "UIApplicationClient",
         "UserDefaultsClient",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
         .product(name: "Overture", package: "swift-overture"),
       ]
     ),
@@ -382,6 +397,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
       dependencies: [
         "ComposableGameCenter",
         "SharedModels",
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ]
     ),
     .testTarget(
@@ -403,6 +419,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
       dependencies: [
         "FirstPartyMocks",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
         .product(name: "Overture", package: "swift-overture"),
         .product(name: "Tagged", package: "swift-tagged"),
         .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
@@ -412,6 +429,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
       name: "ComposableStoreKit",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
         .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
       ]
     ),
@@ -419,6 +437,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
       name: "ComposableUserNotifications",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
         .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
       ]
     ),
@@ -430,6 +449,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "Styleguide",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         .product(name: "Gen", package: "swift-gen"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ],
       resources: [.process("Resources/")]
     ),
@@ -470,6 +490,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "SharedModels",
         "Styleguide",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
         .product(name: "Overture", package: "swift-overture"),
       ]
     ),
@@ -516,12 +537,13 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "SharedModels",
         "UserDefaultsClient",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ]
     ),
     .target(
       name: "DeviceId",
       dependencies: [
-        .product(name: "Dependencies", package: "swift-composable-architecture"),
+        .product(name: "Dependencies", package: "swift-dependencies"),
         .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
       ]
     ),
@@ -587,6 +609,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "UpgradeInterstitialFeature",
         "UserSettingsClient",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ],
       resources: [.process("Resources/")]
     ),
@@ -619,6 +642,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "UpgradeInterstitialFeature",
         "UserDefaultsClient",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ]
     ),
     .testTarget(
@@ -685,6 +709,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "UpgradeInterstitialFeature",
         "UserDefaultsClient",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
         .product(name: "Overture", package: "swift-overture"),
       ]
     ),
@@ -716,6 +741,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "SwiftUIHelpers",
         "UserSettingsClient",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
         .product(name: "Overture", package: "swift-overture"),
       ]
     ),
@@ -751,6 +777,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "Styleguide",
         "TcaHelpers",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ]
     ),
     .testTarget(
@@ -789,6 +816,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "PuzzleGen",
         "SharedModels",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ]
     ),
     .testTarget(
@@ -842,6 +870,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "UserDefaultsClient",
         "UserSettingsClient",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
         .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
       ],
       resources: [.process("Resources/")]
@@ -866,6 +895,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "SharedModels",
         "Styleguide",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ]
     ),
     .target(
@@ -882,6 +912,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
       name: "Styleguide",
       dependencies: [
         "SwiftUIHelpers",
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
         .product(name: "Tagged", package: "swift-tagged"),
       ],
       resources: [
@@ -891,7 +922,8 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
     .target(
       name: "SwiftUIHelpers",
       dependencies: [
-        .product(name: "Gen", package: "swift-gen")
+        .product(name: "Gen", package: "swift-gen"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ]
     ),
     .target(
@@ -918,6 +950,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "TcaHelpers",
         "UserDefaultsClient",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ]
     ),
     .target(
@@ -925,6 +958,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
       dependencies: [
         "Styleguide",
         .product(name: "Dependencies", package: "swift-dependencies"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ]
     ),
     .target(
@@ -942,6 +976,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "Styleguide",
         "SwiftUIHelpers",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ]
     ),
     .testTarget(
@@ -971,6 +1006,7 @@ if ProcessInfo.processInfo.environment["TEST_SERVER"] == nil {
         "LowPowerModeClient",
         "SharedModels",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ]
     ),
   ])
@@ -1075,6 +1111,7 @@ package.targets.append(contentsOf: [
       "SharedModels",
       "SnsClient",
       .product(name: "Either", package: "swift-prelude"),
+      .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
     ]
   ),
@@ -1105,6 +1142,7 @@ package.targets.append(contentsOf: [
       "MiddlewareHelpers",
       "SharedModels",
       .product(name: "HttpPipeline", package: "swift-web"),
+      .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
     ]
   ),
   .testTarget(
@@ -1120,6 +1158,7 @@ package.targets.append(contentsOf: [
     name: "EnvVars",
     dependencies: [
       "SnsClient",
+      .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       .product(name: "Tagged", package: "swift-tagged"),
     ]
   ),
@@ -1132,6 +1171,7 @@ package.targets.append(contentsOf: [
       "ServerRouter",
       .product(name: "CasePaths", package: "swift-case-paths"),
       .product(name: "HttpPipeline", package: "swift-web"),
+      .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
     ]
   ),
   .testTarget(
@@ -1150,6 +1190,7 @@ package.targets.append(contentsOf: [
     dependencies: [
       "ServerTestHelpers",
       .product(name: "Either", package: "swift-prelude"),
+      .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       .product(name: "Tagged", package: "swift-tagged"),
       .product(name: "UrlFormEncoding", package: "swift-web"),
     ]
@@ -1170,6 +1211,7 @@ package.targets.append(contentsOf: [
       "SnsClient",
       .product(name: "Either", package: "swift-prelude"),
       .product(name: "HttpPipeline", package: "swift-web"),
+      .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       .product(name: "Prelude", package: "swift-prelude"),
     ]
   ),
@@ -1237,6 +1279,7 @@ package.targets.append(contentsOf: [
       "ServerConfig",
       "SharedModels",
       .product(name: "HttpPipeline", package: "swift-web"),
+      .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
     ]
   ),
   .target(
@@ -1298,6 +1341,7 @@ package.targets.append(contentsOf: [
       "SnsClient",
       "VerifyReceiptMiddleware",
       .product(name: "HttpPipeline", package: "swift-web"),
+      .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       .product(name: "Overture", package: "swift-overture"),
       .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
     ],
@@ -1319,6 +1363,7 @@ package.targets.append(contentsOf: [
     dependencies: [
       "ServerTestHelpers",
       .product(name: "Either", package: "swift-prelude"),
+      .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       .product(name: "Tagged", package: "swift-tagged"),
       .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
     ]
@@ -1346,6 +1391,7 @@ package.targets.append(contentsOf: [
       "ServerTestHelpers",
       "SharedModels",
       .product(name: "HttpPipeline", package: "swift-web"),
+      .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       .product(name: "Overture", package: "swift-overture"),
     ]
   ),

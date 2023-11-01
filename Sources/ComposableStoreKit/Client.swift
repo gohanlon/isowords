@@ -1,3 +1,4 @@
+import MemberwiseInit
 import StoreKit
 
 public struct StoreKitClient {
@@ -17,19 +18,13 @@ public struct StoreKitClient {
     case updatedTransactions([PaymentTransaction])
   }
 
+  @MemberwiseInit(.public)
   public struct ProductsResponse: Equatable {
     public var invalidProductIdentifiers: [String]
     public var products: [Product]
-
-    public init(
-      invalidProductIdentifiers: [String],
-      products: [Product]
-    ) {
-      self.invalidProductIdentifiers = invalidProductIdentifiers
-      self.products = products
-    }
   }
 
+  @MemberwiseInit(.public)
   public struct Product: Equatable {
     public var downloadContentLengths: [NSNumber]
     public var downloadContentVersion: String
@@ -39,26 +34,6 @@ public struct StoreKitClient {
     public var price: NSDecimalNumber
     public var priceLocale: Locale
     public var productIdentifier: String
-
-    public init(
-      downloadContentLengths: [NSNumber],
-      downloadContentVersion: String,
-      isDownloadable: Bool,
-      localizedDescription: String,
-      localizedTitle: String,
-      price: NSDecimalNumber,
-      priceLocale: Locale,
-      productIdentifier: String
-    ) {
-      self.downloadContentLengths = downloadContentLengths
-      self.downloadContentVersion = downloadContentVersion
-      self.isDownloadable = isDownloadable
-      self.localizedDescription = localizedDescription
-      self.localizedTitle = localizedTitle
-      self.price = price
-      self.priceLocale = priceLocale
-      self.productIdentifier = productIdentifier
-    }
   }
 
   public struct PaymentTransaction: Equatable {
@@ -100,26 +75,13 @@ public struct StoreKitClient {
     }
   }
 
+  @MemberwiseInit(.public)
   public struct Payment: Equatable {
     public var applicationUsername: String?
     public var productIdentifier: String
     public var quantity: Int
     public var requestData: Data?
     public var simulatesAskToBuyInSandbox: Bool
-
-    public init(
-      applicationUsername: String?,
-      productIdentifier: String,
-      quantity: Int,
-      requestData: Data?,
-      simulatesAskToBuyInSandbox: Bool
-    ) {
-      self.applicationUsername = applicationUsername
-      self.productIdentifier = productIdentifier
-      self.quantity = quantity
-      self.requestData = requestData
-      self.simulatesAskToBuyInSandbox = simulatesAskToBuyInSandbox
-    }
   }
 }
 

@@ -3,27 +3,17 @@ import DictionaryClient
 import Either
 import Foundation
 import HttpPipeline
+import MemberwiseInit
 import Prelude
 import ServerRouter
 import SharedModels
 
+@MemberwiseInit(.public)
 public struct SubmitGameRequest {
   public let currentPlayer: Player
   public let database: DatabaseClient
   public let dictionary: DictionaryClient
   public let submitRequest: ServerRoute.Api.Route.Games.SubmitRequest
-
-  public init(
-    currentPlayer: Player,
-    database: DatabaseClient,
-    dictionary: DictionaryClient,
-    submitRequest: ServerRoute.Api.Route.Games.SubmitRequest
-  ) {
-    self.currentPlayer = currentPlayer
-    self.database = database
-    self.dictionary = dictionary
-    self.submitRequest = submitRequest
-  }
 }
 
 public func submitGameMiddleware(

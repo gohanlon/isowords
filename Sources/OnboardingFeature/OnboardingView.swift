@@ -6,6 +6,7 @@ import DictionaryClient
 import FeedbackGeneratorClient
 import GameCore
 import LowPowerModeClient
+import MemberwiseInit
 import PuzzleGen
 import SharedModels
 import Styleguide
@@ -14,23 +15,12 @@ import UIApplicationClient
 import UserDefaultsClient
 
 public struct Onboarding: Reducer {
+  @MemberwiseInit(.public)
   public struct State: Equatable {
-    @PresentationState public var alert: AlertState<Action.Alert>?
-    public var game: Game.State
+    @Init @PresentationState public var alert: AlertState<Action.Alert>? = nil
+    public var game: Game.State = .onboarding
     public var presentationStyle: PresentationStyle
-    public var step: Step
-
-    public init(
-      alert: AlertState<Action.Alert>? = nil,
-      game: Game.State = .onboarding,
-      presentationStyle: PresentationStyle,
-      step: Step = Step.allCases.first!
-    ) {
-      self.alert = alert
-      self.game = game
-      self.presentationStyle = presentationStyle
-      self.step = step
-    }
+    public var step: Step = Step.allCases.first!
 
     public enum PresentationStyle {
       case demo

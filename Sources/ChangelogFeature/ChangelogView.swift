@@ -1,6 +1,7 @@
 import ApiClient
 import Build
 import ComposableArchitecture
+import MemberwiseInit
 import ServerConfigClient
 import SharedModels
 import Styleguide
@@ -9,23 +10,12 @@ import Tagged
 import UIApplicationClient
 
 public struct ChangelogReducer: Reducer {
+  @MemberwiseInit(.public)
   public struct State: Equatable {
-    public var changelog: IdentifiedArrayOf<Change.State>
-    public var currentBuild: Build.Number
-    public var isRequestInFlight: Bool
-    public var isUpdateButtonVisible: Bool
-
-    public init(
-      changelog: IdentifiedArrayOf<Change.State> = [],
-      currentBuild: Build.Number = 0,
-      isRequestInFlight: Bool = false,
-      isUpdateButtonVisible: Bool = false
-    ) {
-      self.changelog = changelog
-      self.currentBuild = currentBuild
-      self.isRequestInFlight = isRequestInFlight
-      self.isUpdateButtonVisible = isUpdateButtonVisible
-    }
+    public var changelog: IdentifiedArrayOf<Change.State> = []
+    public var currentBuild: Build.Number = 0
+    public var isRequestInFlight: Bool = false
+    public var isUpdateButtonVisible: Bool = false
   }
 
   public enum Action: Equatable {
@@ -104,8 +94,9 @@ public struct ChangelogReducer: Reducer {
   }
 }
 
+@MemberwiseInit(.public)
 public struct ChangelogView: View {
-  let store: StoreOf<ChangelogReducer>
+  @Init(.public) let store: StoreOf<ChangelogReducer>
 
   struct ViewState: Equatable {
     let currentBuild: Build.Number
@@ -115,12 +106,6 @@ public struct ChangelogView: View {
       self.currentBuild = state.currentBuild
       self.isUpdateButtonVisible = state.isUpdateButtonVisible
     }
-  }
-
-  public init(
-    store: StoreOf<ChangelogReducer>
-  ) {
-    self.store = store
   }
 
   public var body: some View {

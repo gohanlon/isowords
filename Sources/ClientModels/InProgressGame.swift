@@ -1,12 +1,14 @@
 import Foundation
+import MemberwiseInit
 import SharedModels
 
+@MemberwiseInit(.public)
 public struct InProgressGame: Codable, Equatable {
   public var cubes: Puzzle
   public var gameContext: GameContext
   public var gameMode: GameMode
   public var gameStartTime: Date
-  var _language: Language?
+  @Init(.public, label: "language") var _language: Language? = .en
   public var moves: Moves
   public var secondsPlayed: Int
 
@@ -18,24 +20,6 @@ public struct InProgressGame: Codable, Equatable {
     case _language = "language"
     case moves
     case secondsPlayed
-  }
-
-  public init(
-    cubes: Puzzle,
-    gameContext: GameContext,
-    gameMode: GameMode,
-    gameStartTime: Date,
-    language: Language = .en,
-    moves: Moves,
-    secondsPlayed: Int
-  ) {
-    self.cubes = cubes
-    self.gameContext = gameContext
-    self.gameMode = gameMode
-    self.gameStartTime = gameStartTime
-    self._language = language
-    self.moves = moves
-    self.secondsPlayed = secondsPlayed
   }
 
   public var language: Language {

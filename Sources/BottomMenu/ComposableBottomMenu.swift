@@ -1,6 +1,8 @@
 import ComposableArchitecture
+import MemberwiseInit
 import SwiftUI
 
+//@MemberwiseInit(.public)  // 🛑 Circular reference resolving attached macro 'MemberwiseInit'
 public struct BottomMenuState<Action> {
   public var buttons: [Button]
   public var footerButton: Button?
@@ -19,20 +21,11 @@ public struct BottomMenuState<Action> {
     self.title = title
   }
 
+  @MemberwiseInit(.public)
   public struct Button {
-    public let action: MenuAction?
-    public let icon: Image
     public let title: TextState
-
-    public init(
-      title: TextState,
-      icon: Image,
-      action: MenuAction? = nil
-    ) {
-      self.action = action
-      self.icon = icon
-      self.title = title
-    }
+    public let icon: Image
+    @Init(default: nil) public let action: MenuAction?
   }
 
   public struct MenuAction {
@@ -64,7 +57,9 @@ public struct BottomMenuState<Action> {
 extension BottomMenuState: Equatable where Action: Equatable {}
 extension BottomMenuState.Button: Equatable where Action: Equatable {}
 extension BottomMenuState.MenuAction: Equatable where Action: Equatable {}
-extension BottomMenuState: _EphemeralState {}
+extension BottomMenuState: _EphemeralState {
+  public static var actionType: Any.Type { Action.self }
+}
 
 extension View {
   public func bottomMenu<MenuAction: Equatable>(

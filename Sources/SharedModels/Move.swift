@@ -1,6 +1,8 @@
 import Foundation
+import MemberwiseInit
 import Tagged
 
+@MemberwiseInit(.public)
 public struct Move: Codable, Equatable, Sendable {
   public var playedAt: Date
   public var playerIndex: PlayerIndex?
@@ -9,20 +11,6 @@ public struct Move: Codable, Equatable, Sendable {
   public var type: MoveType
 
   public typealias PlayerIndex = Tagged<Move, Int>
-
-  public init(
-    playedAt: Date,
-    playerIndex: PlayerIndex?,
-    reactions: [PlayerIndex: Reaction]?,
-    score: Int,
-    type: MoveType
-  ) {
-    self.playedAt = playedAt
-    self.playerIndex = playerIndex
-    self.reactions = reactions
-    self.score = score
-    self.type = type
-  }
 
   public enum MoveType: Codable, Equatable, Sendable {
     case playedWord([IndexedCubeFace])
@@ -64,13 +52,10 @@ public struct Move: Codable, Equatable, Sendable {
     }
   }
 
+  @MemberwiseInit(.public)
   public struct Reaction: CaseIterable, Codable, Hashable, Identifiable, RawRepresentable, Sendable
   {
     public let rawValue: String
-
-    public init(rawValue: String) {
-      self.rawValue = rawValue
-    }
 
     public static let angel = Self(rawValue: "😇")
     public static let anger = Self(rawValue: "😡")
